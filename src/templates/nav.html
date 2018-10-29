@@ -1,0 +1,32 @@
+{% load staticfiles %}
+
+<nav class="main__nav" role="navigation">
+    <ul class="nav__list">
+        {% url 'home' as Home %}
+        {% url 'post_list' as Blog %}
+        <li class="nav__item">
+            <a {% if request.path == 'home' %} class="active" {% endif %} href="{% url 'home' %}">Home</a>
+            </li>
+        <li class="nav__item">
+            <a {% if request.path == 'blog' %} class="active" {% endif %} href="{% url 'blog:post_list' %}">Blog</a>
+            </li>
+        <li class="nav__item"><a href="#" class="">Consulting</a></li>
+        <li class="nav__item"><a href="#" class="dropdown-menu">Accounts</a>
+            <ul class="dropdown">
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">logout</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}">login</a></li>
+                <li><a href="{% url 'register' %}">signup</a></li>
+                {% endif %}
+            </ul>    
+        </li>
+        <li  class="nav__item quick-search">
+            <form class="search_form" action="{% url "blog:post_search" %}"  method="get">
+                <input type="search" name="query" aria-label="Search">
+                <span class="search-icon"><i class="fa fa-search"></i></span>
+            </form>
+        </li>
+    </ul>
+</nav>
+

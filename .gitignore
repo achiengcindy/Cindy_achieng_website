@@ -4,6 +4,7 @@
 *.log
 local_settings.py
 db.sqlite3
+.DS_Store
 
 
 # Distribution / packaging
@@ -11,9 +12,7 @@ build/
 dist/
 
 
-
 # Environments
 .env
-
 src/mysite/settings/prod_settings\.py
 src/mysite/settings/stage_settings\.py

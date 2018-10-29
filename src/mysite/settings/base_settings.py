@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'home',
     'newsletter',
     'shop',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -126,15 +127,24 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT=  os.path.join(BASE_DIR,  "media_cdn")
+MEDIA_ROOT=  os.path.join(BASE_DIR,  "media") 
 
 STATICFILES_STORAGE = config('STATICFILES_STORAGE')
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+LOGOUT_URL = '/'
+
+AUTHENTICATION_BACKENDS = (
+'django.contrib.auth.backends.ModelBackend',
+'accounts.authentication.EmailAuthBackend',
+)

@@ -1,0 +1,135 @@
+{% load blog_tags %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>{% include 'metatags.html' %}
+    <title>Cindy Achieng</title>
+    <link rel="shortcut icon" href="{% static "images/favicon.ico" %}"/>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-4286891232433706",
+            enable_page_level_ads: true
+        });
+    </script>
+</head>
+<!-- https://www.uxpin.com/studio/ -->
+<body>
+    <header id="main__header">
+            <div class="header__inner">
+                <a class="header__logo" href="{% url 'home' %}">Cindy <span style="color: yellowgreen;">Achieng</a>
+                   <a id="menu" class="header__menu" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"></path></svg>
+                    </a>
+                <div class="nav__wrapper" id="drawer">
+                    {% include 'nav.html' %}
+                 
+                </div>
+            </div>
+    </header>
+    <main>
+        {% block banner %}{% endblock %}
+       
+        {% block content %}{% endblock %}
+    </div>
+        
+    
+<div id="notification" style="display: none;">
+  A new version of this app is available
+  <button id="accept">refresh</button>
+  <button id="Deny"> Deny</button>
+</div>
+    </main><!--end of .main-->
+
+{% include 'footer.html' %}
+    <script type="text/javascript">
+        window.loadAsync = function loadAsync(src, callback, relative) {
+            var baseUrl = "/resources/script/";
+            var script = document.createElement('script');
+            if (relative === !0) {
+                script.src = baseUrl + src
+            } else {
+                script.src = src
+            }
+            if (callback !== null) {
+                if (script.readyState) {
+                    script.onreadystatechange = function() {
+                        if (script.readyState == "loaded" || script.readyState == "complete") {
+                            script.onreadystatechange = null;
+                            callback()
+                        }
+                    }
+                } else {
+                    script.onload = function() {
+                        callback()
+                    }
+                }
+            }
+            document.getElementsByTagName('head')[0].appendChild(script)
+        };
+    </script>
+    <script>
+        window.cssLoadAsync = function() {
+            var styles = arguments,
+                addStyle = function(style) {
+                    var head = document.head || document.getElementsByTagName('head')[0];
+                    var link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.type = 'text/css';
+                    link.href = style;
+                    link.media = 'all';
+                    head.appendChild(link)
+                };
+            var loadDeferredStyles = function() {
+                for (var style in styles) {
+                    addStyle(styles[style])
+                }
+            };
+            var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+            if (raf)
+                raf(function() {
+                    var deferredStylesTimeout = window.setTimeout(function() {
+                        loadDeferredStyles();
+                        window.clearTimeout(deferredStylesTimeout)
+                    }, 0)
+                });
+            else window.addEventListener('load', loadDeferredStyles)
+        }
+    </script>
+
+    <script type="text/javascript">
+        window.cssLoadAsync("{% static "css/styles.css" %}", "//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", "//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atelier-forest-light.min.css");
+    </script>
+    <script>
+        window.loadAsync('//code.jquery.com/jquery-3.2.1.min.js', function() {
+            window.loadAsync('//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', function() {
+                window.loadAsync('{% static "js/main.js" %}', function() {})
+            })
+        });
+        window.loadAsync('//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js', function() {
+            hljs.initHighlightingOnLoad()
+        });
+        window.loadAsync('{% static "js/typed.min.js" %}', function() {
+            var typed = new Typed('#typed', {
+                strings: ["My coding journey.", "Programming in djann.", "Programming in Django.", "Programming in Python.", "Programming in javascript.", "best practices on the web.", "Web technologies"],
+                typeSpeed: 40,
+                backSpeed: 40,
+                backDelay: 1000,
+                startDelay: 500,
+                loop: !0,
+            })
+        });
+    </script>
+    {% block javascript %}{% endblock %}
+</body>
+</html>
+
+
+
+
+
+
+<!-- https://github.com/mattboldt/typed.js/issues/274 -->
+
+
+
