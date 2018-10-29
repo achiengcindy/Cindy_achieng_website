@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from .forms import EmailPostForm
 
-# Create your views here.
+def contact(request):
+    # Retrieve post by id
+    if request.method == 'POST':
+    # Form was submitted
+        form = EmailPostForm(request.POST)
+        if form.is_valid():
+        # Form fields passed validation
+            cd = form.cleaned_data
+
+    else:
+        form = EmailPostForm()
+    return render(request, 'contacts/contact.html', {'form': form})
