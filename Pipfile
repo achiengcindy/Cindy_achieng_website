@@ -9,6 +9,7 @@ whitenoise = "*"
 python-decouple = "*"
 django-taggit = "*"
 pillow = "*"
+markdown = "*"
 
 [dev-packages]
 pylint = "*"
