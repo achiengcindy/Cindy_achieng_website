@@ -1,25 +1,25 @@
 {% extends "base.html" %}
-{% block title %} Achieng Blog {% endblock %}
-
+{% load staticfiles %}
+{% load blog_tags %}
+{% block title %}{{post.title}}{% endblock %}
 {% block content %}
-<h2>Achieng Blog</h2>
-{% for post in posts %}
-<h2>
-<a href="{{ post.get_absolute_url }}">
-{{ post.title }}
-</a>
-</h2>
-<p class="date">
-Published {{ post.publish }} by {{ post.author }}
-</p>
-{{ post.body|truncatewords:30|linebreaks }}
-{% endfor %}
-% include "pagination.html" with page=posts %}
+
+<ul class="post__lists container">
+	{% for post in posts %}
+	<li class="post__list">
+		<article class="card-wrapper">
+			<img class="card-image" src="{{ post.image.url}}" alt="post image">
+			<header class="article-header">
+				<a href="{{post.category.get_absolute_url}}" class="category" rel="category tag">{{post.category.title}}</a>
+				<h2 style="font-size: 16px"><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
+			</header>
+			 <p class="article-body">{{ post.body|markdown|truncatewords_html:25 }}</p>
+			 <footer class="card-footer"><a href="{{post.get_permalink_url}}">Continue reading</a></footer>
+		</article>
+	</li>
+	{% endfor %}
+</ul>
 {% endblock %}
-
-
-
-
 
 
 
