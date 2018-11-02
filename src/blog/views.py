@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
-from django.contrib.postgres.search import SearchVector
+from django.contrib.postgres.search import SearchVector, TrigramSimilarity, SearchQuery, SearchRank
 #from haystack.query import SearchQuerySet
 import markdown
 # import the strip_tags
@@ -137,7 +137,9 @@ def post_search(request):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
-            results = Post.objects.annotate(search=SearchVector('title', 'body'),).filter(search=query)
+            results = Post.objects.annotate(
+                similarity=TrigramSimilarity('title', query),
+                ).filter(similarity__gt=0.3).order_by('-similarity')
     return render(request,'blog/post/search.html',{'form': form,'query': query,'results': results})
 
 def post_share(request, post_id):
