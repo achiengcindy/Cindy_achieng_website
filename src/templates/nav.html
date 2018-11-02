@@ -4,13 +4,16 @@
     <ul class="nav__list">
         {% url 'home' as Home %}
         {% url 'post_list' as Blog %}
+        {% url 'contact' as Contacts %}
+        
         <li class="nav__item">
             <a {% if request.path == 'home' %} class="active" {% endif %} href="{% url 'home' %}">Home</a>
             </li>
         <li class="nav__item">
             <a {% if request.path == 'blog' %} class="active" {% endif %} href="{% url 'blog:post_list' %}">Blog</a>
             </li>
-        <li class="nav__item"><a href="#" class="">Consulting</a></li>
+     
+        <li class="nav__item"><a {% if request.path == 'contact' %} class="active" {% endif %} href="{% url 'contact' %}" class="">Contact</a></li>
         <li class="nav__item"><a href="#" class="dropdown-menu">Accounts</a>
             <ul class="dropdown">
                 {% if user.is_authenticated %}

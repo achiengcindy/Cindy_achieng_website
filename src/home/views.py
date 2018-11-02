@@ -10,3 +10,5 @@ def home(request):
 def permalink(request, id):
     post = get_object_or_404(Post, id=id)
     return HttpResponseRedirect(post.get_absolute_url())
+
+

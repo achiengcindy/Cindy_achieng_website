@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+{% if category %}
+	category:{{category.title}}
+{% else %}
+	UNCATEGORIZED
+{% endif %}
+
+
+{% for post in posts %}
+<p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
+written by {{ post.author }} on {{ post.publish }} in 
+<a href="{{post.category.get_absolute_url}}">
+    {{post.category}}</a>
+</p>
+{% endfor %}
+
+{% endblock %}
+
+

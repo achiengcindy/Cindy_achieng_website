@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Contact me{% endblock %}
+{% block content %}
+
+<div class="signup-form">
+
+   <h2>Leave your Contact here</h2>
+   {% if form.errors %}Something went wrong. Please try again.{% endif %}
+   <form action="." method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-block" value="Contact me">Conatact Me</button>
+      </form>
+      </div>
+      {% endblock %}

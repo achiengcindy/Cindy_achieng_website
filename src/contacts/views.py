@@ -1,7 +1,7 @@
+from django.shortcuts import render
 from .forms import EmailPostForm
 
 def contact(request):
-    # Retrieve post by id
     if request.method == 'POST':
     # Form was submitted
         form = EmailPostForm(request.POST)
