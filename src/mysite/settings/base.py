@@ -138,5 +138,7 @@ AUTHENTICATION_BACKENDS = (
 'accounts.authentication.EmailAuthBackend',
 )
 
+CART_SESSION_ID = 'cart'
+
 
 
