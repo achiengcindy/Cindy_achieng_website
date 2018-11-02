@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'home',
     'newsletter',
     'taggit',
-    'django.contrib.postgres', 
+    'django.contrib.postgres',
+    'shop',
 ]
 
 MIDDLEWARE = [

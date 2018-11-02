@@ -39,7 +39,7 @@ class Post(models.Model):
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True, null=True)
+    updated = models.DateTimeField(auto_now=True, default="")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     objects = models.Manager() # The default manager.
     published = PublishedManager() # The Dahl-specific manager.
