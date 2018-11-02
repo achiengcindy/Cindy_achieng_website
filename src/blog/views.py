@@ -7,10 +7,9 @@ from django.db.models import Count
 from django.db.models import Q
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from .forms import EmailPostForm, CommentForm, SearchForm, PostForm
-from.models import Post, Category,Comment
 from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
+from django.contrib.postgres.search import SearchVector
 #from haystack.query import SearchQuerySet
 import markdown
 # import the strip_tags
@@ -18,6 +17,10 @@ from django.utils.html import strip_tags
 from django.utils.text import Truncator
 
 from accounts.models import CustomUser
+from.models import Post, Category,Comment
+
+from .forms import EmailPostForm, CommentForm, SearchForm, PostForm
+
 
 
 def list_of_post_by_category(request, search_category):
@@ -110,8 +113,7 @@ def post_detail(request, year, month, day, post):
     context={'post': post, 'comments': comments,'comment_form': comment_form,'similar_posts': similar_posts, 'meta_url':post.get_absolute_url, 'meta_description':strip_tags(markdown.markdown(post.body)), 'meta_image':post.image.url,'meta_title':post.title}
     return render(request, 'blog/post/detail.html', context) 
 
-def post_search(request):
-    
+""" def post_search(request):
     form = SearchForm()
     cd = results = total_results = None
     if 'query' in request.GET:
@@ -125,7 +127,18 @@ def post_search(request):
                 ) 
             total_results = results.count()
     context = {'form': form,'cd': cd,'results': results,'total_results': total_results}
-    return render(request, 'blog/post/search.html', context)
+    return render(request, 'blog/post/search.html', context) """
+
+def post_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results = Post.objects.annotate(search=SearchVector('title', 'body'),).filter(search=query)
+    return render(request,'blog/post/search.html',{'form': form,'query': query,'results': results})
 
 def post_share(request, post_id):
     """
