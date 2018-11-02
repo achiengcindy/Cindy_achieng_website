@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'taggit',
     'django.contrib.postgres',
     'shop',
+    'cart',
 ]
 
 MIDDLEWARE = [
