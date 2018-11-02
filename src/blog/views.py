@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, get_object_or_404,redirect
 from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -18,9 +19,7 @@ from django.utils.text import Truncator
 
 from accounts.models import CustomUser
 from.models import Post, Category,Comment
-
 from .forms import EmailPostForm, CommentForm, SearchForm, PostForm
-
 
 
 def list_of_post_by_category(request, search_category):
@@ -145,6 +144,26 @@ def post_search(request):
 def post_share(request, post_id):
     """
     """
+    #Retrieve the post by id
+    post = get_object_or_404(Post, id=post_id, status='published')
+    sent = False
+
+    if request.method == 'POST':
+        #Form was submitted
+        form = EmailPostForm(request.POST)
+        if form.is_valid():
+            #Form fields passed validation
+            cd = form.cleaned_data
+            # .... send email
+            post_url = request.build_absolute_uri(post.get_absolute_url())
+            subject = '{} ({}) recommends you reading "{}"'.format(cd['name'], cd['email'], post.title)
+            message = 'Read "{}" at {}\n\n{}\'s comments: {}'.format(post.title, post_url, cd['name'], cd['comments'])
+            #send_mail(subject, message, 'admin@achiengcindy.com', [cd['to']])
+            sent = True
+    else:
+        form = EmailPostForm()
+    context = {'post':post, 'form': form, 'sent': sent}
+    return render(request, 'blog/post/share.html', context) 
     #Retrieve the post by id
     post = get_object_or_404(Post, id=post_id, status='published')
     sent = False

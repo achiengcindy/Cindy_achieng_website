@@ -34,12 +34,11 @@ class Post(models.Model):
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='blog_posts',on_delete=models.CASCADE)
     image = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
-    alt = models.TextField(max_length=250,default="")
     caption = models.URLField(max_length=250,null=True, blank=True)
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True, default="")
+    updated = models.DateTimeField(auto_now=True, null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     objects = models.Manager() # The default manager.
     published = PublishedManager() # The Dahl-specific manager.

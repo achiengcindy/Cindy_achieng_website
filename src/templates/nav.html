@@ -5,6 +5,8 @@
         {% url 'home' as Home %}
         {% url 'post_list' as Blog %}
         {% url 'contact' as Contacts %}
+        {% url 'product_list' as Shop %}
+        
         
         <li class="nav__item">
             <a {% if request.path == 'home' %} class="active" {% endif %} href="{% url 'home' %}">Home</a>
@@ -30,6 +32,9 @@
                 <span class="search-icon"><i class="fa fa-search"></i></span>
             </form>
         </li>
+        <li class="nav__item">
+                <a {% if request.path == 'shop' %} class="active" {% endif %} href="{% url 'shop:product_list' %}">Blog</a>
+                </li>
     </ul>
 </nav>
 

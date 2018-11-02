@@ -33,10 +33,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls', namespace='blog')),
     #path('cart/', include('cart.urls', namespace='cart')),
-    #path('shop/', include('shop.urls', namespace='shop')),
     path('contact/', contact, name='contact'),
     path('permalink/<id>/', views.permalink, name='permalink'),
     path('newsletter/', include('newsletter.urls' , namespace='newsletter')),
+    path('shop/', include('shop.urls' , namespace='shop')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},name='django.contrib.sitemaps.views.sitemap'),
     path('sw.js', (TemplateView.as_view(template_name="sw.js", content_type='application/javascript', )), name='sw.js'),
 ]
