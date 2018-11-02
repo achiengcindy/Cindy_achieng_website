@@ -16,6 +16,6 @@ dist/
 .env
 src/mysite/settings/prod\.py
 src/mysite/settings/stage\.py
-src/mysite/settings/dev\.py
 
-src/mysite/settings/dev_settings\.py
+
+
