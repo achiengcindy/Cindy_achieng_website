@@ -29,15 +29,15 @@ sitemaps = {'posts': PostSitemap,}
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('permalink/<id>/', views.permalink, name='permalink'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls', namespace='blog')),
-    #path('cart/', include('cart.urls', namespace='cart')),
     path('contact/', contact, name='contact'),
-    path('permalink/<id>/', views.permalink, name='permalink'),
     path('newsletter/', include('newsletter.urls' , namespace='newsletter')),
     path('shop/', include('shop.urls' , namespace='shop')),
+    path('cart/', include('cart.urls', namespace='cart')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},name='django.contrib.sitemaps.views.sitemap'),
     path('sw.js', (TemplateView.as_view(template_name="sw.js", content_type='application/javascript', )), name='sw.js'),
 ]
