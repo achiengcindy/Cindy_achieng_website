@@ -16,11 +16,9 @@ def newsletter_subscribe(request):
 			else:
 				instance.save()
 				messages.success(request, "your Email has been submitted to our database")
-				send_multiple_email(instance.name, instance.email)
-				
+				send_multiple_email(instance.name, instance.email)		
 	else:
 		form = NewsUserForm()
-
 	context = {'form':form}
 	template = "newsletter/subscribe.html"
 	return render(request, template, context)
