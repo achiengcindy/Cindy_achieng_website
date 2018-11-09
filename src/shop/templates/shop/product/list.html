@@ -1,25 +1,26 @@
-{% extends "base.html" %}
+{% extends "shop/base.html" %}
+{% load static %}
 {% load staticfiles %}
 {% block title %}{% if category %}{{ category.name }}{% else %}Products{% endif %}{% endblock %}
 
-{% block banner %}{% endblock %}
-
 {% block content %}
-<div class="container">
-        <h3>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h3>    
-        {% for product in products %}     
-        <div class="item">
-                <a href="{{ product.get_absolute_url }}">
-                <img src="{% if product.image %}{{ product.image.url }}{%
-                else %}{% static "img/no_image.png" %}{% endif %}">
-                </a>
-                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-                <br>
-                ${{ product.price }}</div>
+<section class="products-new">
+        <h3>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h3>
+        <div class="container products">
+                {% for product in products %}
+                <div class="item">
+                        <a href="{{ product.get_absolute_url }}">
+                                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+        <br>
+        {{ product.name }}
+        <br>
+        ${{ product.price }}
+                </div>
                 {% endfor %}
-
-</div>
+        </div>
+</section>
 {% endblock %}
+
 
 
 

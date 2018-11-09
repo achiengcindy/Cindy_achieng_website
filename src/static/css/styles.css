@@ -1,3 +1,24 @@
+/* ====================== shop ====================== */
+.products-new{
+background-color: #f6f7f9;
+padding: 5rem 0;
+}
+
+
+button.cart{
+    position: relative;
+    padding: 9px 15px;
+    border-radius: 0;
+   font-size: 14px; 
+    letter-spacing: 1px;
+    border: 0;
+    text-transform: uppercase;
+    min-height: 44px;
+    line-height: 1.9;
+    background-color: #333;
+    color: #fff;
+}
+ 
 /* ====================== typography ====================== */
  html, body {
      height: 100%;

@@ -6,6 +6,7 @@ main{
 }
 aside{
     width: 20%;
+    float: left;
 }
 
 .header_top{
@@ -14,8 +15,17 @@ aside{
 .header_lower{
     width: 100%; 
 }
-li{
-    display: inline-block;
+header li{
+    display: inline-block;  
+}
+.products{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 
-    
 }
