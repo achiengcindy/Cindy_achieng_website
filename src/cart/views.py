@@ -12,10 +12,34 @@ def cart_add(request, product_id):
     form = CartAddProductForm(request.POST)
     if form.is_valid():
         cd = form.cleaned_data
-        cart.add(product=product,
-                 quantity=cd['quantity'],
-                 update_quantity=cd['update'])
-    return redirect('cart:cart_detail')
+        cart.add(product=product,quantity=cd['quantity'],update_quantity=cd['update'])
+        return redirect('cart:cart_detail')
+
+
+
+def order_create(request):
+    cart = Cart(request)
+    if request.method == 'POST':
+        form = OrderCreateForm(request.POST)
+        if form.is_valid():
+            order = form.save()
+            for item in cart:
+                OrderItem.objects.create(order=order,
+                                        product=item['product'],
+                                        price=item['price'],
+                                        quantity=item['quantity'])
+            # clear the cart
+            cart.clear()
+            # launch asynchronous task
+            order_created.delay(order.id)
+            return render(request,
+                          'orders/order/created.html',
+                          {'order': order})
+    else:
+        form = OrderCreateForm()
+    return render(request,
+                  'orders/order/create.html',
+                  {'cart': cart, 'form': form})
 
 
 def cart_remove(request, product_id):
@@ -28,7 +52,5 @@ def cart_remove(request, product_id):
 def cart_detail(request):
     cart = Cart(request)
     for item in cart:
-            item['update_quantity_form'] = CartAddProductForm(
-                              initial={'quantity': item['quantity'],
-                              'update': True})
+            item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'],'update': True})
     return render(request, 'cart/detail.html', {'cart': cart})

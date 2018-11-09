@@ -35,6 +35,7 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='blog_posts',on_delete=models.CASCADE)
     image = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
     caption = models.URLField(max_length=250,null=True, blank=True)
+    alt = models.CharField(max_length=250, default = '')
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)

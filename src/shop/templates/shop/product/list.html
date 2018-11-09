@@ -1,12 +1,14 @@
-{% extends "shop/base.html" %}
-{% load static %}
+{% extends "base.html" %}
+{% load staticfiles %}
 {% block title %}{% if category %}{{ category.name }}{% else %}Products{% endif %}{% endblock %}
 
-{% block content %}
+{% block banner %}{% endblock %}
 
-        <h3>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h3>
-                {% for product in products %}
-                <div class="item">
+{% block content %}
+<div class="container">
+        <h3>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h3>    
+        {% for product in products %}     
+        <div class="item">
                 <a href="{{ product.get_absolute_url }}">
                 <img src="{% if product.image %}{{ product.image.url }}{%
                 else %}{% static "img/no_image.png" %}{% endif %}">
@@ -16,7 +18,7 @@
                 ${{ product.price }}</div>
                 {% endfor %}
 
-
+</div>
 {% endblock %}
 
 

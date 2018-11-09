@@ -1,4 +1,4 @@
-var staticCacheName = 'achieng-cache-v5'; //name of our cache
+var staticCacheName = 'achieng-cache-v4'; //name of our cache
 
 self.addEventListener('install', function(event) {
     event.waitUntil(

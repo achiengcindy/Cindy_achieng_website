@@ -7,3 +7,15 @@ main{
 aside{
     width: 20%;
 }
+
+.header_top{
+    width: 100%;
+}
+.header_lower{
+    width: 100%; 
+}
+li{
+    display: inline-block;
+
+    
+}

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>{% include 'metatags.html' %}
-    <title>Cindy Achieng</title>
+        {% block title %}Cindy Achieng{% endblock %}
     <link rel="shortcut icon" href="{% static "images/favicon.ico" %}"/>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
@@ -16,24 +16,21 @@
 <!-- https://www.uxpin.com/studio/ -->
 <body>
     <header id="main__header">
-            <div class="header__inner">
-                <a class="header__logo" href="{% url 'home' %}">Cindy <span style="color: yellowgreen;">Achieng</a>
-                   <a id="menu" class="header__menu" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"></path></svg>
-                    </a>
+        <a class="header__logo" href="{% url 'home' %}">Cindy <span style="color: yellowgreen;">Achieng</a>
+            <a id="menu" class="header__menu" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"></path></svg></a>
                 <div class="nav__wrapper" id="drawer">
                     {% include 'nav.html' %}
-                 
                 </div>
-            </div>
+                <div class="header-icons">
+                    {% include 'header-icons.html' %}
+                </div>
+            
     </header>
     <main>
         {% block banner %}{% endblock %}
        
-        {% block content %}{% endblock %}
-    </div>
-        
-    
+        {% block content %}{% endblock %} 
 <div id="notification" style="display: none;">
   A new version of this app is available
   <button id="accept">refresh</button>
