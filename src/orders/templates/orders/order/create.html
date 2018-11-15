@@ -1,11 +1,9 @@
 {% extends "shop/base.html" %}
-{% block title %}
-Checkout
-{% endblock %}
+{% block title %}Checkout{% endblock %}
 {% block content %}
-<h1>Checkout</h1>
+<h3>Checkout</h3>
 <div class="order-info">
-<h3>Your order</h3>
+<h4>Your order</h4>
 <ul>
 {% for item in cart %}
 <li>
@@ -16,9 +14,15 @@ Checkout
 </ul>
 <p>Total: ${{ cart.get_total_price }}</p>
 </div>
-<form action="." method="post" class="order-form">
-{{ form.as_p }}
-<p><input type="submit" value="Place order"></p>
-{% csrf_token %}
-</form>
+
+<div class="order">
+    <form action="." method="post" class="order-form">
+        {{ form.as_p }}
+        <p><input type="submit" value="Place order"></p>
+        {% csrf_token %}
+    </form>
+</div>
+
 {% endblock %}
+
+

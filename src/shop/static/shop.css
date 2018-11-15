@@ -1,31 +1,5 @@
-header{
-    width: 100%;
-}
-main{
-    width: 80%;
-}
-aside{
-    width: 20%;
-    float: left;
-}
 
-.header_top{
-    width: 100%;
-}
-.header_lower{
-    width: 100%; 
-}
-header li{
-    display: inline-block;  
-}
-.products{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
 
-}
+
+
+
