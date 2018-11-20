@@ -25,7 +25,11 @@
 <div class="header-icons">
     <ul>
         <li>
+                {% if user.is_authenticated %}
+                hello {{ request.user}}
+                {% else %}
          <img src="{% static 'images/accounts_icon.png' %}">
+         {% endif %}
          <ul class="dropdown">
              {% if user.is_authenticated %}
              <li><a href="{% url 'logout' %}">logout</a></li>
@@ -37,17 +41,17 @@
         </li>
  
         <li>
-            <img src="{% static 'images/shopping-cart-solid.svg' %}">
+            <img src="{% static 'images/basket.svg' %}">
              {% with total_items=cart|length %}
              {% if cart|length > 0 %}
-             <a href="{% url "cart:cart_detail" %}"></a>
+             <a href="{% url "cart:cart_detail" %}">
              <span id="checkout_items" class="checkout_items">{{ total_items }}</span> 
-             <small>ksh{{ cart.get_total_price }}</small> 
+             <small>ksh{{ cart.get_total_price }}</small>
+             </a>
              {% else %}
              empty
              {% endif %}
              {% endwith %}
-         </a>
         </li>
     </ul>
  </div>
