@@ -44,9 +44,11 @@
     </section>
 
     <section class="recent_blogs home">
-        <!-- post written -->
-        <h2 class="section-title">Latest Posts from my Blog</h2>
-        {% show_latest_posts 3 %}
+      <div class="container">
+         <!-- post written -->
+         <h2 class="section-title">Latest Posts from my Blog</h2>
+         {% show_latest_posts 3 %}
+      </div>
     </section>
 <!--     <section class="recent__works main__content">
        <h2 class="section-title">Recent Works</h2>
@@ -59,21 +61,16 @@
     </section> -->
     <section class="popular__posts home">
       <div class="container">
-      <h2 class="section-title">Trending Posts</h2>
-      <!-- popular posts -->
-      {%  get_most_commented_posts  as  most_commented_posts  %}
+        <h2 class="section-title">Trending Posts</h2>
+        <!-- popular posts -->
+        {%  get_most_commented_posts  as  most_commented_posts  %}
       <ul>
         {% for post in most_commented_posts %}
         <li class="posts">
+          <img class="post-image" src="{{post.image.url }}" alt="Popular post">
           <article class="post-list">
-               <img class="post-image" src="{{post.image.url }}" alt="Popular post" style="display: none;">
-               <div class="post-content">
-                <header class="popular-post-content">
-                   <h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-                 <span>{{ post.category }}</span>
-                </header>
-                 {{ post.body|markdown|truncatewords_html:35 }}
-               </div> 
+            <h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+            <p>{{ post.body|markdown|truncatewords_html:35 }}</p>
           </article>
         </li>
         {% endfor %}
@@ -81,37 +78,41 @@
       <footer class="more__posts">
         <button><a href="{% url "blog:post_list" %}">More Posts</a></button> 
       </footer>
-    </div>
+
+      </div>
     </section>
 
-    <section class="partners home">
-      <h2 class="section-title">Partners</h2>
-      <ul class="partners-section">
-        <li>
-          <a href="https://v2.curriculum.co.ke/" target="_blank">
-            <figure>
-              <img src="{% static 'images/graduation-cap_1_160x72.png' %}">
-              <figcaption> curriculum</figcaption>
-            </figure>
-          </a>
-        </li>
-        <li>
-          <a href="http://www.mochahost.com/6882.html" target="_blank">
-            <figure>
-              <img src="{% static 'images/mochahost_160x72.png' %}">
-              <figcaption> Mochahost</figcaption>
-            </figure>
-          </a>
-        </li>
-        <li>
-            <a href="https://www.mailjet.com/?tap_a=25852-4bddf6&tap_s=243499-30c71b&aff=243499-30c71b" target="_blank">
-            <figure>
-              <img src="{% static 'images/mailjetad.jpg' %}">
-              <figcaption> Mailjet</figcaption>
-            </figure>
-          </a>
-          
-        </li>
-      </ul>
+    <section class="partners">
+      <div class="container">
+        <h2 class="section-title">Partners</h2>
+        <ul class="partners-section">
+          <li>
+            <a href="https://v2.curriculum.co.ke/" target="_blank">
+              <figure>
+                <img src="{% static 'images/graduation-cap_1_160x72.png' %}">
+                <figcaption> curriculum</figcaption>
+              </figure>
+            </a>
+          </li>
+            <li>
+              <a href="http://www.mochahost.com/6882.html" target="_blank">
+                <figure>
+                  <img src="{% static 'images/mochahost_160x72.png' %}">
+                  <figcaption> Mochahost</figcaption>
+                </figure>
+              </a>
+            </li>
+            <li>
+                <a href="https://www.mailjet.com/?tap_a=25852-4bddf6&tap_s=243499-30c71b&aff=243499-30c71b" target="_blank">
+                <figure>
+                  <img src="{% static 'images/mailjetad.jpg' %}">
+                  <figcaption> Mailjet</figcaption>
+                </figure>
+              </a>
+              
+            </li>
+          </ul>
+
+      </div>
     </section>
     {% endblock %}

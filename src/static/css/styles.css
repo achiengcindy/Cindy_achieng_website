@@ -1,7 +1,9 @@
 /* ====================== shop ====================== */
 .products{
     width: 100%;
-
+}
+.products_list img{
+    width: 200px;
 }
  .products-new{
     display: -webkit-box;
@@ -300,7 +302,7 @@ header-icons ul:last-of-type li {
     font-size: 12px;
     position: absolute;
     top: -40%;
-    right: 38%;
+    right: 45%;
 }
 
 /* ====================== banner ====================== */
@@ -364,9 +366,6 @@ header-icons ul:last-of-type li {
  .container, .single-post{
      margin-top: 5.5em;
 }
- section.home{
-     padding: .625em;
-}
  .section-title {
      display: block;
      overflow: hidden;
@@ -391,7 +390,8 @@ header-icons ul:last-of-type li {
      width: 100%;
      display: block;
 }
- .partners-section {
+/* .recent_blogs ol,  */
+.partners-section{
      display: flex;
      display: -ms-flexbox;
      flex-wrap: wrap;
@@ -418,29 +418,26 @@ header-icons ul:last-of-type li {
      -webkit-box-shadow: 1px 1px 2px 3px #2e77bd;
      box-shadow: 1px 1px 2px 3px #2e77bd;
 }
- .services img, .article-image {
+ .services img, .article-image{
      height: 100px;
      width: 100px;
 }
+
  .popular__posts {
      width: 100%;
 }
  .popular__posts li {
-     clear: both;
-     margin: 30px 0;
+    width: 100%;
+    margin-bottom: 2em;
 }
- .post-image {
+.post-list{
+    padding-left: 5em;
+}
+.post-image{
+    height: 80px;
+     width: 80px;
      top: 0;
      float: left;
-}
- .popular-post-content span {
-     font-size: 14px!important;
-     color: #d51b1e;
-}
- .post-content p {
-     max-width: 100%;
-     width: 100%;
-     margin-bottom: 1em;
 }
  .more__posts button {
      padding: 21px 60px;
@@ -764,11 +761,7 @@ input[type='text'], input[type='password'], input[type='email'],.distributed {
      .hero h1 {
          font-size: 2.75rem;
     }
-     .post-image{
-         display: block !important;
-         width: 100px;
-         height: 80px;
-    }
+     
      .post-content {
          margin-left: 6em;
     }
@@ -848,12 +841,6 @@ input[type='text'], input[type='password'], input[type='email'],.distributed {
         height: 600px;
     }
    
-      .popular__posts{
-        padding: 0 5em;
-    }
-     section.home{
-         padding: 2.625em;
-    }
      .single-post{
          padding: 0 4em;
     }
@@ -867,16 +854,8 @@ input[type='text'], input[type='password'], input[type='email'],.distributed {
      .post__list{
          width: 50%;
     }
-     .services li:last-of-type {
-         margin-right: 0;
-    }
-     .post-image {
-         width: 210px;
-         height: 110px;
-    }
-     .post-content {
-         margin-left: 10em;
-         padding: 0 5em;
+    .post-list {
+        margin-left: 10em;
     }
      .hero{
          padding-top: 11em;
@@ -899,8 +878,6 @@ input[type='text'], input[type='password'], input[type='email'],.distributed {
     #main__header .header__logo, .header-icons a {
         font-size: 1.2em;
     }
-
-
     table th, table td {
         font-size:14px;
         padding:1em;
@@ -940,9 +917,6 @@ input[type='text'], input[type='password'], input[type='email'],.distributed {
     }
      .post__list{
          width: 33.33%;
-    }
-    .popular__posts{
-        padding: 0 10em !important;
     }
        .post-description{
          padding:0 11em 0 0;

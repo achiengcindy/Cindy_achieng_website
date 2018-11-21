@@ -11,6 +11,8 @@ django-taggit = "*"
 pillow = "*"
 markdown = "*"
 "psycopg2" = "*"
+celery = "*"
+redis = "*"
 
 [dev-packages]
 pylint = "*"

@@ -11,7 +11,6 @@
         <div class="product_detail">
                 <h3>{{ product.name }}</h3>
                 <div class="item">
-                {{ product.description|linebreaks }}
                 <h4><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h4>
                 <p class="price">ksh{{ product.price }}</p>
                 <form action="{% url "cart:cart_add" product.id %}" method="post">
@@ -19,11 +18,9 @@
                         {% csrf_token %}
                         <button class="cart">Add to cart</button>
                 </form>
+                {{ product.description|linebreaks }}
         </div>
 </div>  
 </section>
 {% endblock %}
-
-
-
 
