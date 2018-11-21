@@ -31,17 +31,20 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = False
 
-# Application definition
+# payment must be a secret!
+consumer_key = config('consumer_key')
+consumer_secret = config('consumer_secret')
 
+# Application definition
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'accounts',
+    'django.contrib.admin',
+    'django.contrib.auth',
     'blog',
     'contacts',
     'home',
