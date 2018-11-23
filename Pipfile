@@ -13,9 +13,13 @@ markdown = "*"
 "psycopg2" = "*"
 celery = "*"
 redis = "*"
+requests = "*"
 
 [dev-packages]
 pylint = "*"
+"autopep8" = "*"
+yapf = "*"
+black = "*"
 
 [requires]
 python_version = "3.6"

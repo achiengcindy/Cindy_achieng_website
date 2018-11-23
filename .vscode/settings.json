@@ -1,4 +1,5 @@
 {
-    "python.pythonPath": "/home/cindy/.local/share/virtualenvs/Cindy_achieng_website-0dyFz08l/bin/python",
-    "python.linting.enabled": false
+    "python.pythonPath": "/usr/bin/python",
+    "python.linting.enabled": false,
+    "python.formatting.provider": "black"
 }

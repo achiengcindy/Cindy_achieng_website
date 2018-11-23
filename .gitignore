@@ -27,3 +27,9 @@ src/dump1\.json
 src/staticfiles/
 
 src/static/css/
+
+src/payment/mpesa\.py
+
+src/payment/token\.py
+
+src/orders/migrations/
