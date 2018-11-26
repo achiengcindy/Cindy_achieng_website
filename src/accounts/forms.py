@@ -30,4 +30,8 @@ class RegistrationForm(forms.ModelForm):
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ('date_of_birth', 'photo', 'address',)
+        fields = ( 'photo', 'address','postal_code','city')
+
+      
+
+

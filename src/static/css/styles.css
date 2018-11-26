@@ -113,7 +113,7 @@ thead th, tbody tr.total {
 table.cart {
     margin-bottom:40px;
 }
-table.cart img {
+table.cart .product-image {
     width:100px;
 }
 td input[type="submit"] {

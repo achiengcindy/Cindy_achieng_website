@@ -74,3 +74,5 @@ def edit(request):
         profile_form = ProfileEditForm(instance=request.user)
     return render(request, 'accounts/edit.html', {'profile_form': profile_form})
    
+
+

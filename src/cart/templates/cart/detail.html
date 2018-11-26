@@ -9,9 +9,9 @@
             <th>Image</th>
             <th>Product</th>
             <th>Quantity</th>
-            <th>Remove</th>
             <th>Unit price</th>
             <th>Price</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -20,8 +20,8 @@
               <tr>
                   <td>
                       <a href="{{ product.get_absolute_url }}">
-                      <img src="{% if product.image %}{{ product.image.url }}
-                      {% else %}{% static "img/no_image.png" %}{% endif %}">
+                      <img class="product-image" src="{% if product.image %}{{ product.image.url }}
+                      {% else %}{% static "images/no_image.png" %}{% endif %}">
                       </a>
                       </td>
                 <td>{{ product.name }}</td>
@@ -33,26 +33,27 @@
                     {% csrf_token %}
                   </form>
                 </td>
-                <td><a href="{% url "cart:cart_remove" product.id %}">Remove</a></td>
                 <td class="num">ksh{{ item.price }}</td>
                 <td class="num">ksh{{ item.total_price }}</td>
+                <td><a href="{% url "cart:cart_remove" product.id %}"><img src="{% static "images/trash.svg" %}"></a></td>
               </tr>
             {% endwith %}
           {% endfor %}
           <tr class="total">
             <td>Total</td>
             <td colspan="4"></td>
-            <td class="num">${{ cart.get_total_price }}</td>
+            <td class="num">ksh{{ cart.get_total_price }}</td>
           </tr>
         </tbody>
       </table>
       <p class="text-right">
         <a href="{% url "shop:product_list" %}" class="button light">Continue shopping</a>
-        <a href="{% url "orders:order_create" %}" class="button">
-          Checkout
-        </a>
+
+        <a href="{% url "orders:order_create" %}" class="button">View Cart and Checkout</a>
+        
       </p>
 {% endblock %}
+
 
 
 

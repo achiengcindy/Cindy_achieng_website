@@ -5,13 +5,14 @@ from django.conf import settings
 
 class Order(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL, null=True)
-    address = models.CharField(max_length=250)
-    postal_code = models.CharField(max_length=20)
-    city = models.CharField(max_length=100)
+    address = models.CharField(max_length=250 , default='')
+    postal_code = models.CharField(max_length=20 , default='')
+    city = models.CharField(max_length=100 , default='')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
-    Mpesa_transaction_id = models.CharField(max_length = 150, blank= True)
+    Mpesa_transid = models.CharField(max_length = 150, blank= True)
+
 
     class Meta:
         ordering = ('-created',)

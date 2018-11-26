@@ -1,0 +1,22 @@
+{% extends "shop/base.html" %}
+{% block title %}Pay using mpesa{% endblock %}
+{% block content %}
+<h3>Pay using Mpesa</h3>
+<p>Asante {{ request.user }},Your order <strong>{{ order.id }}</strong> has been created successfully.
+        
+<ol>
+        <li>Go to M-PESA on your phone.</li>
+        <li>Select Lipa na MPESA.</li>
+        <li>Enter Paybill Number:******</li>
+        <li>Enter Account Number: order id.</li>
+        <li>Enter the Amount.</li>
+        <li>Enter your M-PESA PIN and Send.</li>
+        <li>You will receive a confirmation via SMS.</li>
+</ol>
+
+<button><a href="{% url "payment:lipa" %}">Pay Now</a></button>
+
+{% endblock %}
+
+
+

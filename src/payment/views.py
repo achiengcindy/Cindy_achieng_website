@@ -8,6 +8,7 @@ from decimal import Decimal
 from django.conf import settings
 from orders.models import Order
 
+from django.views.decorators.csrf import csrf_exempt
 
 
 """ To intergrate Mpesa api
@@ -15,51 +16,113 @@ from orders.models import Order
 2. register confirmation+ validation urls
 3. simulate transaction """
 
+def payment_lipa(request):
+    order = get_object_or_404(Order, id=order_id)
+
+    if(order.paid == True):
+        return HttpResponse( "The payment was accepted successfully")
+    else:
+        return HttpResponse('payment didnt go through')
+        
+    
+
+   
+
 # generating acess tokens
 def safaricom_access_token():
     try:
-        consumer_key = settings.consumer_key
-        consumer_secret = settings.consumer_secret
+        consumer_key = 'settings.consumer_key'
+        consumer_secret = 'settings.consumer_secret'
         api_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
         response = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
         return response.json()['access_token']
-        """ tokens = response.json()['access_token']
-        return tokens """
     except:
         return None
 
 #send json data using python requests
 # register confirmation and validation urls
-def saf_registration(self):
-    host_name = "https://45946c94.ngrok.io/"
+def saf_registration(request):
+    host = request.get_host()
     access_token = safaricom_access_token()
-    api_url = "http://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl"
-    # no need to specify content-type if using json
-    #headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    api_url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl" # "http://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl"
     headers = {"Authorization": "Bearer %s" % access_token}
-    request = {"ShortCode": "600504","ResponseType": "confirmed","ConfirmationURL": host_name + "/payment/confirmed", "ValidationURL": host_name + "/payment/validation"}
-    response = requests.post(api_url, json=request, headers=headers)
-    print(response)
-    return response.json()
+    saf_request = { "ShortCode": "600000", "ResponseType": "confirmed", "ConfirmationURL": "https://cod.ngrok.io/payment/confirmed/", "ValidationURL": "https://9d308b9b.ngrok.io/payment/validation/"}
+    response = requests.post(api_url, json=saf_request, headers=headers,  timeout=(3.05, 6.05))
+    return HttpResponse(response)
 
-
-# payment validation     
+# payment validation
+@csrf_exempt    
 def payment_validation(request):
-    order_id = request.session.get('order_id')
-    order = get_object_or_404(Order, id=order_id)
-    return  HttpResponse('helo data')
+    # returns an object from a string representing a json object.
+    data = json.loads(request.body)
+    print(data)
+    order_id = data["BillRefNumber"]
+    amount = float(data["TransAmount"])
+    mpesaid = data["TransID"]
 
+    # https://stackoverflow.com/q/3090302
+    order = None
+    try:
+        order = Order.objects.get(pk=order_id)
+    except Exception as e:
+        # https://stackoverflow.com/a/7791383
+        print(e)
+
+    if(order != None):
+        if(order.paid == False):
+            print("({} == {}) => {}".format(order.get_total_cost(), amount, (order.get_total_cost()== amount)))
+            if(order.get_total_cost() == amount):
+                order.paid = True
+                order.Mpesa_transid = mpesaid 
+                order.save()
+                return JsonResponse({"ResultCode": 0,"ResultDesc": "The service was accepted successfully"})
+            else:
+                return JsonResponse({"ResultCode": 0,"ResultDesc": "AMOUNT PAID NOT EQUAL TO ORDER TOTAL COST..."})
+        else:
+            return JsonResponse({"ResultCode": 0,"ResultDesc": "ORDER ALREADY PAID..."})
+    else:
+        return JsonResponse({"ResultCode": 0,"ResultDesc": "NO ORDER WITH ID :=> {}...".format(order_id)})
+
+
+@csrf_exempt
 def payment_confirmed(request):
-    host_name = "%s"%str(request.get_host())
-    #use jsonresponse
-    return JsonResponse({"results": 0, "ResultDesc": "The service was accepted successfully","ThirdPartyTransID": host_name})
-    #the object JsonResponse default Content-Type is set as application/json, and it will serialize your data and return to client.
+    response = request.body
+    # returns an object from a string representing a json object.
+    data = json.loads(response)
+    order_id = data["BillRefNumber"]
+    amount = float(data["TransAmount"])
+    mpesaid = data["TransID"]
 
-def payment_canceled(request):
-    return HttpResponse('canceled')
+    # https://stackoverflow.com/q/3090302
+    order = None
+    try:
+        order = Order.objects.get(pk=order_id)
+    except Exception as e:
+        # https://stackoverflow.com/a/7791383
+        print(e)
+
+    if(order != None):
+        if(order.paid == False):
+            print("({} == {}) => {}".format(order.get_total_cost(), amount, (order.get_total_cost()== amount)))
+            if(order.get_total_cost() == amount):
+                order.paid = True
+                order.Mpesa_transid = mpesaid 
+                order.save()
+                print("SAVED ORDER AS PAID...")
+            else:
+                print("AMOUNT PAID NOT EQUAL TO ORDER TOTAL COST...")
+        else:
+            print("ORDER ALREADY PAID...")
+    else:
+        print("NO ORDER WITH ID :=> {}...".format(order_id))
+
+    return JsonResponse({"ResultCode": 0,"ResultDesc": "The service was accepted successfully"})
+
+
+
 
 #simulating transaction
-def saf_simulation():
+def saf_simulation(request):
 	host_name = "https://6ec449ce.ngrok.io"
 	access_token = safaricom_access_token()
 	api_url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate"
@@ -67,9 +130,11 @@ def saf_simulation():
 	request = { 
 		"ShortCode":"600000",
   		"CommandID":"CustomerPayBillOnline",
-  		"Amount":"5666",
+  		"Amount":"5000",
   		"Msisdn":"254708374149",
-  		"BillRefNumber":"666888" 
+  		"BillRefNumber":"78" 
   		}
 	response = requests.post(api_url, json = request, headers=headers)
-	return response.json()
+	return HttpResponse(response) 
+
+
