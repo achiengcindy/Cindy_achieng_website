@@ -3,7 +3,7 @@ import requests, json
 from requests.auth import HTTPBasicAuth
 #https://devforgalaxy.github.io/en/2017/10/23/django-handle-json-request-en.html 
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from decimal import Decimal
 from django.conf import settings
 from orders.models import Order
@@ -16,14 +16,30 @@ from django.views.decorators.csrf import csrf_exempt
 2. register confirmation+ validation urls
 3. simulate transaction """
 
-def payment_lipa(request):
-    order = get_object_or_404(Order, id=order_id)
-
-    if(order.paid == True):
-        return HttpResponse( "The payment was accepted successfully")
+#https://stackoverflow.com/questions/3630822/django-python-getting-field-name-from-database-get-object
+# def payment_lipa(request, order_id):
+#     order = get_object_or_404(Order,pk=order_id)
+def payment_lipa(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    #print(order)
+    #print(order.paid)
+    if (order.paid == True):
+        return render(request,'payment/lipa.html', {'order':order})
     else:
-        return HttpResponse('payment didnt go through')
-        
+        return HttpResponse('you have not paid,please pay again')
+  
+    # for cur in order:
+    #     print(cur)
+    #     # Prints order
+    #     for f in cur._meta.fields: # field is a django field
+    #         if f.name == 'paid':
+    #             print(f.name)
+    #             #prints paid
+    #             if f.name == True:
+    #                 return HttpResponse('paid')
+    #             else:
+    #                 return HttpResponse('not paid')
+    #        
     
 
    

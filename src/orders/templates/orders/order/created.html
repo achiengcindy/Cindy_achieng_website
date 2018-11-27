@@ -17,6 +17,6 @@
             <li>You will receive a confirmation via SMS.</li>
     </ol>
     
-    <button><a href="{% url "payment:lipa" %}">Pay Now</a></button>
+    <button><a href="{% url 'payment:lipa' order.id %}">Pay Now</a></button>
 
 {% endblock %}

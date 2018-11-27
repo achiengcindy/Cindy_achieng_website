@@ -5,7 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 app_name = 'payment'
 
 urlpatterns = [
-    path('lipa/', views.payment_lipa, name='lipa'),
+    #path('lipa/', views.payment_lipa, name='lipa'),
+    path('lipa/<int:order_id>/', views.payment_lipa, name='lipa'),
     path('validation/', views.payment_validation, name='validation'),
     path('confirmed/', views.payment_confirmed, name='confirmed'),
     path('simulate/', views.saf_simulation, name='simulate'),
