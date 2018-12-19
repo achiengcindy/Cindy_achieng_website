@@ -1,18 +1,17 @@
 from django import forms
-from django.forms import ModelForm
-from django.conf import settings
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from .models import Profile
 
-CustomUser = get_user_model()
 
 
 class RegistrationForm(forms.ModelForm):
+    email = forms.EmailField(max_length=200, help_text='Required')
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)
 
     class Meta:
-        model = CustomUser
-        fields = ('first_name','last_name','username','email',)
+        model = User
+        fields = ('username','email','first_name',) 
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -22,16 +21,19 @@ class RegistrationForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data['email']
-        if CustomUser.objects.filter(email=email).exists():
+        if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Please use another Email,that is already taken')
         return email
 
 
 class ProfileEditForm(forms.ModelForm):
     class Meta:
-        model = CustomUser
-        fields = ( 'photo', 'address','postal_code','city')
+        model = Profile
+        exclude = ('user'),
 
-      
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ( 'last_name', )
 
 

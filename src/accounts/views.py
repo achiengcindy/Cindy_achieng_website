@@ -10,35 +10,43 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import EmailMessage
 
-from .forms import RegistrationForm , ProfileEditForm
+from .forms import RegistrationForm , ProfileEditForm, UserEditForm
 from .tokens import account_activation_token
+from .models import Profile
 
-User = get_user_model()
+User= get_user_model()
 
 
 def register(request):
     if request.method == 'POST':
         user_form = RegistrationForm(request.POST)
         if user_form.is_valid():
-            new_user = user_form.save(commit=False)
-            new_user.email = user_form.cleaned_data['email']
-            new_user.set_password(user_form.cleaned_data['password'])
-            new_user.is_active = False
-            new_user.save()
+            user = user_form.save(commit=False)
+            user.email = user_form.cleaned_data['email']
+            user.set_password(user_form.cleaned_data['password'])
+            user.is_active = False
+            # Save the User object
+            user.save()
+            # Create the user profile
+            profile = Profile.objects.create(user=user)
             #send one time activation email
             current_site = get_current_site(request)
-            subject = 'Activate Account'
+            print(current_site)
+            subject = 'Activate your Account'
             sender = 'mail@achiengcindy.com'
             message = render_to_string('accounts/account_activation_email.html', {
-                'user':  new_user,
+                'user':  user,
                 'domain': current_site.domain,
-                'uid':urlsafe_base64_encode(force_bytes( new_user.pk)).decode(),
-                'token':account_activation_token.make_token( new_user),
+                'uid':urlsafe_base64_encode(force_bytes( user.pk)).decode(),
+                'token':account_activation_token.make_token( user),
             })
+            print( message)
             # https://stackoverflow.com/questions/40655802/how-to-implement-email-user-method-in-custom-user-model
-            email = EmailMessage(subject, message,sender, [new_user.email])
+            email = EmailMessage(subject, message,sender, [user.email])
+            print(email)
             email.send()
             return redirect('account_activation_sent')
+            
 
     else:
         user_form = RegistrationForm()
@@ -61,18 +69,22 @@ def activate(request, uidb64, token, backend='accounts.authentication.EmailAuthB
     else:
         return render(request, 'accounts/account_activation_invalid.html')
 
+
+
 @login_required
 def edit(request):
     if request.method == 'POST':
-        profile_form = ProfileEditForm(instance=request.user,data=request.POST,files=request.FILES)
-        if profile_form.is_valid():
+        user_form = UserEditForm(instance=request.user,data=request.POST)
+        profile_form = ProfileEditForm(instance=request.user.profile,data=request.POST,files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
             profile_form.save()
             messages.success(request, 'Profile updated successfully')
+            return redirect('/')
         else:
             messages.error(request, 'Error updating your profile')
     else:
-        profile_form = ProfileEditForm(instance=request.user)
-    return render(request, 'accounts/edit.html', {'profile_form': profile_form})
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    return render(request, 'accounts/edit.html', {'user_form': user_form,'profile_form': profile_form})
    
-
-
