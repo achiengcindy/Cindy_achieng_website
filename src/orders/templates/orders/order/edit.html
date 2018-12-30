@@ -1,0 +1,39 @@
+{% extends "shop/base.html" %}
+{% load orders_tags %}
+{% block title %}Checkout{% endblock %}
+
+
+{% block content %}
+<h2>Edit Shipping info</h2>
+<div class="container">
+      
+                {% if error_message %}
+                <ul class="errorlist">
+                        <li>{{ error_message }}</li>
+                </ul>
+                {% endif %}
+                <form action="." method="post">
+                                {% csrf_token %}
+                        <fieldset class="checkout">
+                                <legend>Shipping Info</legend>
+                                <table>
+                                                {% form_table_row billing_form.address %}
+                                                {% form_table_row billing_form.postal_code %}
+                                                {% form_table_row billing_form.city %}
+                                                {% form_table_row billing_form.Estate %}
+
+                
+                                </table>
+                        </fieldset>
+                        <table>
+                                <tr>
+                <th colspan="2"><input type="submit" value="Edit shipping info" class="submit" /></th>
+                                </tr>
+                        </table>
+                </form>
+                    
+
+                
+</div>
+
+{% endblock %}

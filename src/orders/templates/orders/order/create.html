@@ -1,28 +1,73 @@
 {% extends "shop/base.html" %}
+{% load orders_tags %}
 {% block title %}Checkout{% endblock %}
-{% block content %}
-<h3>Checkout</h3>
-<div class="order-info">
-<h4>Your order</h4>
-<ul>
-{% for item in cart %}
-<li>
-{{ item.quantity }}x {{ item.product.name }}
-<span>${{ item.total_price }}</span>
-</li>
-{% endfor %}
-</ul>
-<p>Total: ${{ cart.get_total_price }}</p>
-</div>
 
-<div class="order">
-        <form action="." method="post" class="order-form">
-                {{ form.as_p }}
-                <p><input type="submit" value="Place order"></p>
-                {% csrf_token %}
-                </form>
+
+
+{% block content %}
+<h2>Checkout</h2>
+<div class="container">     
+        <div class="row topspace">{{ customer.order_set.all }}
+               <!--  <div class="span">
+                        {% if error_message %}
+                        <ul class="errorlist">
+                                <li>{{ error_message }}</li>
+                        </ul>
+                        {% endif %}
+                        <form action="." method="post">
+                                        {% csrf_token %}
+                                <fieldset class="checkout">
+                                        <legend>Contact Info</legend>
+                                        <table>
+                                                                  
+                                                {% form_table_row form.owner.email %}
+                                                {% form_table_row form.phone %}
+        
+                                        </table>
+                                </fieldset>
+                                <fieldset class="checkout">
+                                        <legend>Shipping Info</legend>
+                                        <table>
+                                                        {% form_table_row form.physical_address %}
+                                                        {% form_table_row form.postal_code %}
+                                                        {% form_table_row form.city %}
+                                                        {% form_table_row form.Estate %}
+                        
+                                        </table>
+                                </fieldset>
+                                <table>
+                                        <tr>
+                        <th colspan="2"><input type="submit" value="Place Order" class="submit" /></th>
+                                        </tr>
+                                </table>
+                        </form>
+                </div> -->
+
+        </div>  
 </div>
+      
+               
+        
 
 {% endblock %}
 
+<!-- 
+<div class="order-info">
+                <h4>Your order</h4>
+                <ul>
+                                {% for item in cart %}
+                                <li>
+                                {{ item.quantity }}x {{ item.product.name }}
+                                <span>${{ item.total_price|floatformat:"2" }}</span>
+                                </li>
+                                {% endfor %}
+                                {% if cart.coupon %}
+                                <li>
+                                "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
+                                <span>- ${{ cart.get_discount|floatformat:"2" }}</span>
+                                </li>
+                                {% endif %}
+                                </ul>
+                <p>Total: ${{ cart.get_total_price_after_discount|floatformat:"2" }}</p>
+                </div> -->
 

@@ -1,22 +1,174 @@
 {% extends "shop/base.html" %}
+{% load shop_filters %}
+{% load shop_tags %}
+{% load staticfiles %}
 {% block title %}Payment Options{% endblock %}
 {% block content %}
 <div class="container">
-<h3>Order created successfully</h3>
-<p>Asante {{ request.user }},Your order <strong>{{ order.id }}</strong> has been created successfully.
+        <div class="row topspace">
+             
+                <div class="receipt cart-collaterals">
+                                {% if user.is_authenticated %}
+                        <h4><legend> Details for Order {{ order.id }}</legend></h4>
+                        Asante {{ order.customer.username|capfirst }}!
+                        {{ customer.order_set.all }}
+                        <table><tr>
+                                        <th>Created</th>
+                                        <td>{{ order.created }}</td>
+                                        </tr>
+                                        <tr>
+                                        <th>Customer</th>
+                                        <td>{{ order.customer.first_name }} {{ order.customer.last_name }}</td>
+                                        </tr>
+                                        <tr>
+                                        <th>E-mail</th>
+                                        <td><a href="mailto:{{ order.email }}">{{ order.customer.email }}</a></td>
+                                        </tr>
+                                        <tr>
+                                        <th>Address</th>
+                                        <td>{{ order.customer.address }}, {{ order.customer.postal_code }} {{ order.customer.city }}</td>
+                                        </tr>
+                
+                                        <tr>
+                                        <th>Status</th>
+                                        <td>{% if order.paid %}Paid{% else %}Pending payment{% endif %}</td>
+                                        </tr>
+                                        </table>
+                           
+    {% endif %}
+                       
+                        <table>
+                                        <thead>
+                                                        <tr>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Price</th>
+                                                        <th scope="col">Quantity</th>
+                                                        <th class="right" scope="col">Total</th>
+                                                        </tr>
 
-    <h3>Pay using Mpesa</h3>
-     
-    <ol>
-            <li>Go to M-PESA on your phone.</li>
-            <li>Select Lipa na MPESA.</li>
-            <li>Enter Paybill Number:******</li>
-            <li>Enter Account Number: order id.</li>
-            <li>Enter the Amount.</li>
-            <li>Enter your M-PESA PIN and Send.</li>
-            <li>You will receive a confirmation via SMS.</li>
-    </ol>
-    
-    <button><a href="{% url 'payment:lipa' order.id %}">Pay Now</a></button>
+                                                
+                                        </thead>
+                                
+                                    
+                                        <tbody>
+                                                        {% for item in cart %}
+                                                        <tr>
+                                                        
+                                                        
+                                                        <td>{{ item.product.name }}</td>
+                                                        <td>{{ item.price|currency }}</td> 
+                                                        <td>{{ item.quantity }}</td>
+                                                        <td class="right">{{ item.total_price|currency }}</td>
 
-{% endblock %}
+                                                        
+
+                                                        </tr>
+                                                        {% endfor %}
+                                                        
+                                                                        {% if cart.coupon %}
+                                                                       
+                                                                                <th colspan="3">"{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)</th>
+                                                                                <td class="right"> - {{ cart.get_discount|floatformat:"2"|currency }}</td>
+                                                                        </tr>
+                                                                        <tr><th colspan="3">total</th><td data-title="Total"><strong>{{ cart.get_total_price_after_discount|floatformat:"2"|currency }}</strong></td></tr>
+                                                        
+                                                        
+                                                                        {% endif %}
+
+                                      </tbody>
+                                    </table>
+
+                </div>
+
+                <div class="payment">
+                                <h3>Pay using Mpesa</h3>
+                                <img src="{% static 'images/mpesa.jpg' %}">
+                                <ol>
+                                        <li>Go to M-PESA on your phone.</li>
+                                        <li>Select Lipa na MPESA.</li>
+                                        <li>Enter Paybill Number:******</li>
+                                        <li>Enter Account Number: <b>{{ order.id }}</b> </li>
+                                        <li>Enter the Amount.</li>
+                                        <li>Enter your M-PESA PIN and Send.</li>
+                                        <li>You will receive a confirmation via SMS.</li>
+                                </ol>
+                                <button class="button"><a href="{% url 'payment:lipa' order.pk %}">Pay Now</a></button>
+                        </div>
+
+        </div>
+</div>
+
+
+        {% endblock %}
+
+
+
+
+        <table id="receipt">
+                        <caption>Your order has been placed!<br /><br />
+                        Your Order Number is: {{ order.id }}
+                        </caption>
+                        <thead>
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th class="right" scope="col">Total</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                        <td colspan="4" class="right" style="height:30px;">
+                        Order Total: {{ order.total|currency }}
+                        </td>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for item in order_items %}
+                        <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price|currency }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td class="right">{{ item.total|currency }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<legend>Order History</legend>
+{% for order in orders %}
+<a href="{{ order.get_absolute_url }}">
+Order #{{ order.id }} - {{ order.created|date }}
+</a>
+<br />
+{% empty %}
+You have no past orders.
+{% endfor %}
+
+
