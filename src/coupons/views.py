@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 from .models import Coupon
-from .forms import couponform
+from .forms import CouponForm
 
 @require_POST
-def coupon_include(request):
+def coupon_apply(request):
     now = timezone.now()
-    form = couponform(request.POST)
+    form = CouponForm(request.POST)
     if form.is_valid():
         code = form.cleaned_data['code']
         try:
@@ -16,3 +16,4 @@ def coupon_include(request):
         except Coupon.DoesNotExist:
             request.session['coupon_id'] = None
     return redirect('cart:cart_detail')
+
