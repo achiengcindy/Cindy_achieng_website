@@ -16,8 +16,6 @@ import markdown
 # import the strip_tags
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
-
-from accounts.models import CustomUser
 from.models import Post, Category,Comment
 from .forms import EmailPostForm, CommentForm, SearchForm, PostForm
 
