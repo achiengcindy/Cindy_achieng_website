@@ -3,6 +3,11 @@
 {% block content %}
 <div class="signup-form">
 	<h2>Create an account</h2>
+	{% if error_message %}
+	<ul class="errorlist">
+			<li>{{ error_message }}</li>
+	</ul>
+	{% endif %}
 	<form action="." method="post">{% csrf_token %}
         <p class="hint-text">Create your account. It's free and only takes a minute.</p>
         {{ user_form.as_p }} 

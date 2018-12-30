@@ -1,19 +1,45 @@
 {% extends "base.html" %}
+{% load orders_tags %}
 {% block title %}Edit your account{% endblock %}
 {% block content %}
+<div class="container">
+      <h2>Edit Your Details here</h2>
+      {% if form.errors %}Something went wrong. Please try again.{% endif %}
+      <form action="." method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+         <fieldset class="checkout">
+               <legend>Contact info</legend>
+               <table>
+                     {% form_table_row user_form.last_name %}
+               </table>
+         </fieldset>
+   
+         <fieldset class="checkout">
+               <legend>profile info</legend>
+               <table>
+                     {% form_table_row profile_form.birth_date %}
+                     {% form_table_row profile_form.photo %}
+   
+               </table>
+         </fieldset>
+        
+         <fieldset class="checkout">
+               <legend>Billing info</legend>
+               <table>
+                     {% form_table_row profile_form.address %}
+                     {% form_table_row profile_form.postal_code %}
+                     {% form_table_row profile_form.city %}
+                     {% form_table_row profile_form.Estate %}
+               </table>
+         </fieldset>
+        
+         <button type="submit" class="btn btn-block"  name="next" value="{{next}}">Edit</button>
+         </form>
+</div>
 
-<div class="signup-form">
 
-   <h2>Edit Your Details here</h2>
-   {% if form.errors %}Something went wrong. Please try again.{% endif %}
-   <form action="." method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ user_form.as_p }}
-      {{ profile_form.as_p }}
-      <button type="submit" class="btn btn-block"  name="next" value="{{next}}">Edit</button>
-      </form>
-      </div>
+  
+ 
    {% endblock %}
 
     
-            

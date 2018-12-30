@@ -6,8 +6,8 @@ from .models import Profile
 
 class RegistrationForm(forms.ModelForm):
     email = forms.EmailField(max_length=200, help_text='Required')
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)
+    password = forms.CharField(label='Password', widget=forms.PasswordInput,  help_text='Password must be six characters long')
+    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput,  help_text='Password must be six characters long')
 
     class Meta:
         model = User
@@ -30,6 +30,13 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ('user'),
+
+        def clean_phone(self):
+            phone = self.cleaned_data['phone']
+            stripped_phone = strip_non_numbers(phone)
+            if len(stripped_phone) < 10:
+                raise forms.ValidationError('Enter a valid phone number.(e.g.07********)')
+            return self.cleaned_data['phone']
 
 class UserEditForm(forms.ModelForm):
     class Meta:
