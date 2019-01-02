@@ -110,7 +110,7 @@ def post_detail(request, year, month, day, post):
     context={'post': post,'similar_posts': similar_posts, 'meta_url':post.get_absolute_url, 'meta_description':strip_tags(markdown.markdown(post.body)), 'meta_image':post.image.url,'meta_title':post.title}
     return render(request, 'blog/post/detail.html', context) 
 
-""" def post_search(request):
+ def post_search(request):
     form = SearchForm()
     cd = results = total_results = None
     if 'query' in request.GET:
@@ -124,9 +124,8 @@ def post_detail(request, year, month, day, post):
                 ) 
             total_results = results.count()
     context = {'form': form,'cd': cd,'results': results,'total_results': total_results}
-    return render(request, 'blog/post/search.html', context) """
-
-def post_search(request):
+    return render(request, 'blog/post/search.html', context) 
+""" def post_search(request):
     form = SearchForm()
     query = None
     results = []
@@ -138,7 +137,7 @@ def post_search(request):
                 similarity=TrigramSimilarity('title', query),
                 ).filter(similarity__gt=0.3).order_by('-similarity')
     return render(request,'blog/post/search.html',{'form': form,'query': query,'results': results})
-
+ """
 def post_share(request, post_id):
     """
     """
