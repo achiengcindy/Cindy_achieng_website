@@ -86,105 +86,27 @@
             </div><!-- /.related_posts -->
             <!-- comments -->
             <section class="comments">
-                    {% block javascript %}
+                    <div id="disqus_thread"></div>
                     <script>
-                     
-                      $(document).on('submit', '#comment-form',function (e) {
-                          e.preventDefault();
-                           $.ajax({
-                              url: '/blog/details/',
-                              Type: 'POST'
-                              data: {
-                                'website': $('#id_website').val()
-                                'comments': $('#id_body').val()
-                              },
-                  
-                              success: function () {
-                              }
-                            });
-                          });
-                      
-                    </script>
-                    {% endblock %}
-                {% with comments.count as total_comments %}
-                <h3 class="comments-title">{{total_comments}} comment {{total_comments|pluralize:"s"}}</h3>
-            
+                    
+                    /**
+                    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
                 
-                {% endwith %}
-                <!-- <a href="#comment-form" class="leave-comment">Leave a Comment</a> -->
-                {% if user.is_authenticated %}
-                <div id="respond">
-                    <h4>Leave a Comment</h4>
-                    <form action="." method="post" id="comment-form">
-                        {% csrf_token %}
-                        {{ comment_form.as_p }}
-                        <input class="btn contact-btn" type="submit" value="comment">
-                    </form>
-                    <!-- Comment with nested comments -->
-                    <ol class="comment-list">
-                        {% for comment in comments %}
-                        <li class="comment even thread-even depth-1 parent">
-                            <article class="comment-body">
-                                <footer class="comment-meta">
-                                    <div class="comment-author vcard">
-                                    {% if comment.commenter.photo %}
-                                    <img src="{{ comment.commenter.photo.url }}" class="avatar"> {% else %}
-                                    <img class="avatar" src="{% static 'images/default.jpeg' %}"> {% endif %}
-                                    <b class="fn">{{ comment.commenter.username }}</b> <span class="says">says:</span>
-                                    </div>
-                                    <!-- .comment-author -->
-                                    <div class="comment-metadata">
-                                        <a href="{{post.get_absolute_url}}">
-                                        <span class="time">{{ comment.created }}|{% if comment.replies.all.count > 0 %} {{ comment.replies.all.count }} Replies {% endif %}</span>
-                                        </a>
-                                    </div>
-                                    <!-- .comment-metadata -->
-                                </footer>
-                                <!-- .comment-meta -->
-                                <div class="comment-content">{{ comment.body|linebreaks }}</div>
-                                <!-- .comment-content -->
-                                <a rel="nofollow" class="comment-reply-link reply" href="#">Reply</a>
-                            </article>
-                        <ol class="children">
-                            {% for reply in comment.replies.all %}
-                            <li class="comment odd alt depth-2 parent">
-                                <article class="comment-body">
-                                    <footer class="comment-meta">
-                                        <div class="comment-author vcard">
-                                            {% if reply.commenter.photo %}
-                                            <img src="{{ reply.commenter.photo.url }}" class="avatar" alt="Avatar"> {% else %}
-                                            <img class="avatar" src="{% static 'images/default.jpeg' %}"> {% endif %}
-                                            <b class="fn">{{ reply.commenter.username }}</b> <span class="says">says:</span>
-                                        </div>
-                                        <!-- .comment-author -->
-                                        <div class="comment-metadata">
-                                            <a href="{{post.get_absolute_url}}">
-                                                <span class="time"></span>
-                                            </a>
-                                        </div>
-                                        <!-- .comment-metadata -->
-                                    </footer>
-                                    <div class="comment-content">{{ reply.body }}</div>
-                                    <!-- .comment-content -->
-                                </article>
-                            </li>
-                            {% endfor %}
-                            <form action="." method="post" id ='comment-form' style="display:none">
-                                {% csrf_token %}
-                                {{ comment_form.as_p }}
-                                <!-- Hidden input for parent comment.id -->
-                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                                <input class="btn contact-btn" type="submit" value="Reply">
-                            </form>
-                        </ol>
-                        </li>
-                {% empty %}
-                <p>There are no comments yet.</p>
-                {% endfor %}
-        </ol>
-    </div><!-- /respond -->
-    {% else %}
-    <a href="{% url 'login' %}?next={{request.path}}">Login To Comment</a> {% endif %}
+                    var disqus_config = function () {
+                    this.page.url = post.get_absolute_url();  // Replace PAGE_URL with your page's canonical URL variable
+                    //this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                    };
+                   
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://https-achiengcindy-com-1.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                    })();
+                    </script>
+                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                                                     
             </section>
         </div>
 

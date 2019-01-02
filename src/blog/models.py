@@ -29,7 +29,7 @@ class Post(models.Model):
         ('draft', 'Draft'),
         ('published', 'Published'),
     )
-    category = models.ForeignKey(Category, default="",on_delete=models.CASCADE)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE)
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='blog_posts',on_delete=models.CASCADE)
@@ -61,7 +61,7 @@ class Post(models.Model):
     def get_permalink_url(self):
         return reverse('permalink', args=[self.id])    
 
-class Comment(models.Model):
+""" class Comment(models.Model):
 
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='user_comments',on_delete=models.CASCADE, default='')
@@ -78,7 +78,7 @@ class Comment(models.Model):
     def __str__(self):
         return 'Comment by {}'.format(self.commenter)
   
-
+ """
 
 
 

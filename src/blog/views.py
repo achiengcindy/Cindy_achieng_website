@@ -16,8 +16,8 @@ import markdown
 # import the strip_tags
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
-from.models import Post, Category,Comment
-from .forms import EmailPostForm, CommentForm, SearchForm, PostForm
+from.models import Post, Category
+from .forms import EmailPostForm, SearchForm, PostForm
 
 
 def list_of_post_by_category(request, search_category):
@@ -66,8 +66,8 @@ def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post,status='published',publish__year=year,publish__month=month, publish__day=day)
 
     # List of active comments for this post
-    comments = post.comments.filter(active=True, parent__isnull=True)
-    
+    # comments = post.comments.filter(active=True, parent__isnull=True)
+    """ 
     if request.method == 'POST':
         comment_form =CommentForm(data=request.POST)
         if comment_form.is_valid():
@@ -100,14 +100,14 @@ def post_detail(request, year, month, day, post):
             return HttpResponseRedirect(post.get_absolute_url())
 
     else:
-        comment_form = CommentForm()
+        comment_form = CommentForm() """
     
     # List of similar posts
     post_tags_ids = post.tags.values_list('id', flat=True)
     similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
     similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags', '-publish')[:4]
     #print(Truncator(strip_tags(markdown.markdown(post.body))).words(2, truncate=''))
-    context={'post': post, 'comments': comments,'comment_form': comment_form,'similar_posts': similar_posts, 'meta_url':post.get_absolute_url, 'meta_description':strip_tags(markdown.markdown(post.body)), 'meta_image':post.image.url,'meta_title':post.title}
+    context={'post': post,'similar_posts': similar_posts, 'meta_url':post.get_absolute_url, 'meta_description':strip_tags(markdown.markdown(post.body)), 'meta_image':post.image.url,'meta_title':post.title}
     return render(request, 'blog/post/detail.html', context) 
 
 """ def post_search(request):
