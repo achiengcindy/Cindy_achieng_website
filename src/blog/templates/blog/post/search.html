@@ -1,19 +1,19 @@
+
 {% extends "base.html" %}
+
 {% block title %}Search{% endblock %}
 
 {% block content %}
-<h3 class="">Search for posts</h3>
-<p>{% with results.count as total_results %}
-  Found {{ total_results }} result{{ total_results|pluralize }} containing "{{ query }}"
-  {% endwith %}</p>
 
-{% for post in results %}
-<h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
-{% empty %}
-<p>There are no results for your query.</p>
-<form action="{% url "blog:post_search" %}" method="get">
-{{ form.as_p }}
-<input type="submit" value="Search">
-</form>
-{% endfor %}
+  <h3 class="">Search for posts</h3>
+  <p class="">Found {{ total_results }} result{{ total_results|pluralize }} containing "{{ cd.query }}"</p>
+    {% for post in results %}
+     <a class="" href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+     {% endfor %}   
+    <a class="" href="{% url "blog:post_search" %}">Search again</a>
+     <form action="." method="get">
+      {{ form.as_p }}
+      </form>
 {% endblock %}
+
+

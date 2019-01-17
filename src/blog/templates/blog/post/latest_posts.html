@@ -1,7 +1,10 @@
 {% load blog_tags %}
 
         {% for post in latest_posts %}
-        <h3 class="align-center">
-            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-        </h3>
+       <ul><li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li></ul>
+  
     {% endfor %}
+
+
+
+
