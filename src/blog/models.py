@@ -35,7 +35,6 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='blog_posts',on_delete=models.CASCADE)
     image = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
     caption = models.URLField(max_length=250,null=True, blank=True)
-    alt = models.CharField(max_length=250, default = '')
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
@@ -61,7 +60,7 @@ class Post(models.Model):
     def get_permalink_url(self):
         return reverse('permalink', args=[self.id])    
 
-""" class Comment(models.Model):
+class Comment(models.Model):
 
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='user_comments',on_delete=models.CASCADE, default='')
@@ -78,7 +77,7 @@ class Post(models.Model):
     def __str__(self):
         return 'Comment by {}'.format(self.commenter)
   
- """
+
 
 
 

@@ -1,4 +1,148 @@
+{% with comments.count as total_comments %}
+<h3 class="comments-title">{{total_comments}} comment {{total_comments|pluralize:"s"}}</h3>
+{% endwith %}
 
+
+<!-- Comment with nested comments -->
+{% for comment in comments %}
+<div class="comment-list">
+<div class="single-comment justify-content-between d-flex">
+    <div class="user justify-content-between d-flex">
+            {% if comment.commenter.photo %}
+        <div class="thumb">
+            <img src="{{ comment.commenter.photo.url }}" alt="">
+            {% else %}
+            <img src="{% static 'images/default.jpeg' %}"> 
+        </div>
+        {% endif %}
+        <div class="desc">
+            <h5><a href="#">{{ comment.commenter.username }}</a></h5>
+            <p class="date">{{ comment.created }}|{% if comment.replies.all.count > 0 %} {{ comment.replies.all.count }} Replies {% endif %}</p>
+            <p class="comment">{{ comment.body|linebreaks }}</p>
+        </div>
+    </div>
+    <div class="reply-btn">
+        <a href="{{post.get_absolute_url}}" class="btn-reply text-uppercase">reply</a>
+    </div>
+</div>
+</div>
+
+{% for reply in comment.replies.all %}
+<div class="comment-list left-padding">
+<div class="single-comment justify-content-between d-flex">
+    <div class="user justify-content-between d-flex">
+        <div class="thumb">
+            {% if reply.commenter.photo %}
+            <img src="{{ reply.commenter.photo.url }}"  alt=""> {% else %}
+            <img src="{% static 'images/default.jpeg' %}"> 
+            {% endif %}
+        </div>
+        <div class="desc">
+            <h5><a href="{{post.get_absolute_url}}">{{ reply.commenter.username }}</a></h5>
+            <p class="date">December 4, 2017 at 3:12 pm </p>
+            <p class="comment">{{ reply.body }}</p>
+        </div>
+    </div>
+    <div class="reply-btn">
+        <a href="{{post.get_absolute_url}}" class="btn-reply text-uppercase">reply</a>
+    </div>
+</div>
+</div>
+{% endfor %}
+<h5>Replay</h5>
+<form action="." method="post">
+{{ comment_form.as_p }}
+{% csrf_token %}
+<!-- Hidden input for parent comment.id -->
+<input type="hidden" name="parent_id" value="{{ comment.id }}">
+<input class="btn btn-primary" type="submit" value="Replay">
+</form>
+
+{% empty %}
+<p>There are no comments yet.</p>
+{% endfor %}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="comment-form">
+<h4>Leave a Comment</h4>
+<form action="." method="post">
+    <input type="url" class="form-control" name="website" maxlength="200" id="website" placeholder="website" onfocus="this.placeholder = ''" onblur="this.placeholder = 'website'">
+    <textarea class="form-control mb-10" rows="5" name="body" placeholder="body" onfocus="this.placeholder = ''" onblur="this.placeholder = 'body'" required=""></textarea>
+    {% csrf_token %}
+    <a href="#" class="primary-btn submit_btn">Post Comment</a>
+</form>
+</div>
+</div>
+<div class="sidebar">
+<!-- post written -->
+<h2 class="aside-title">Latest Posts from my Blog</h2>
+
+{% show_latest_posts 3 %}
+<a href="https://www.mochahost.com/6882-47-1-246.html" target="_blank"><img border="0" src="https://www.mochasupport.com/aff/banners/120x600_mgreen.gif" width="120" height="600"></a>
+
+ 
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="popular__posts home">
+        <div class="container">
+          <h2 class="section-title">Trending Posts</h2>
+              <!-- popular posts -->
+              {%  get_most_commented_posts  as  most_commented_posts  %}
+            <ul class="row padding">
+              {% for post in most_commented_posts %}
+              <li class="column posts">
+                  {% include 'tags/blog_thumbnail.html' %}
+                   
+                <article class="post-content">
+                  <h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                  <p class="align-center">{{ post.body|markdown|truncatewords_html:25 }}</p>
+                </article>
+              </li>
+              {% endfor %}
+            </ul>
+            <footer class="more__posts">
+              <button><a href="{% url 'blog:post_list' %}">More Posts</a></button> 
+            </footer>
+      
+            </div>
+      </section>
+      
 
 {% block javascript %}
 <script>
