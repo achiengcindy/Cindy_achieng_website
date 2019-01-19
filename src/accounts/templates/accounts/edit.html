@@ -5,6 +5,14 @@
 <div class="container">
       <h2>Edit Your Details here</h2>
       {% if form.errors %}Something went wrong. Please try again.{% endif %}
+
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
       <form action="." method="post" enctype="multipart/form-data">
          {% csrf_token %}
          <fieldset class="checkout">
@@ -19,6 +27,7 @@
                <table>
                      {% form_table_row profile_form.birth_date %}
                      {% form_table_row profile_form.photo %}
+                     {% form_table_row profile_form.phone %}
    
                </table>
          </fieldset>
@@ -26,17 +35,19 @@
          <fieldset class="checkout">
                <legend>Billing info</legend>
                <table>
-                     {% form_table_row profile_form.address %}
+                     
+                     {% form_table_row profile_form.physical_address %}
                      {% form_table_row profile_form.postal_code %}
                      {% form_table_row profile_form.city %}
                      {% form_table_row profile_form.Estate %}
                </table>
          </fieldset>
+
         
          <button type="submit" class="btn btn-block"  name="next" value="{{next}}">Edit</button>
+         
          </form>
 </div>
-
 
   
  

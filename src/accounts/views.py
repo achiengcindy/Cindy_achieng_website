@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.core.mail import EmailMessage
 
 from .forms import RegistrationForm , ProfileEditForm, UserEditForm
+from orders.models import Order, OrderItem
 from .tokens import account_activation_token
 from .models import Profile
 
@@ -25,14 +26,14 @@ def register(request):
             user.email = user_form.cleaned_data['email']
             user.set_password(user_form.cleaned_data['password'])
             user.is_active = False
-            # Save the User object
+            # Save the User
+            # object
             user.save()
             # Create the user profile
-            profile = Profile.objects.create(user=user)
+            #profile = Profile.objects.create(user=user)
             #send one time activation email
             current_site = get_current_site(request)
-            print(current_site)
-            subject = 'Activate your Account'
+            subject = 'Confirm your Account'
             sender = 'mail@achiengcindy.com'
             message = render_to_string('accounts/account_activation_email.html', {
                 'user':  user,
@@ -42,15 +43,17 @@ def register(request):
             })
             print( message)
             # https://stackoverflow.com/questions/40655802/how-to-implement-email-user-method-in-custom-user-model
-            email = EmailMessage(subject, message,sender, [user.email])
-            print(email)
-            email.send()
+            # email = EmailMessage(subject, message,sender, [user.email])
+            # print(email)
+            # email.send()
+            user.email_user(subject=subject, message=message)
             return redirect('account_activation_sent')
             
 
     else:
         user_form = RegistrationForm()
     return render(request, 'accounts/register.html',{'user_form': user_form})
+
 
 def account_activation_sent(request):
     return render(request, 'accounts/account_activation_sent.html')
@@ -72,10 +75,10 @@ def activate(request, uidb64, token, backend='accounts.authentication.EmailAuthB
 
 
 @login_required
-def edit(request):
+def accounts_edit(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user,data=request.POST)
-        profile_form = ProfileEditForm(instance=request.user.profile,data=request.POST,files=request.FILES)
+        profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST,files=request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -88,3 +91,9 @@ def edit(request):
         profile_form = ProfileEditForm(instance=request.user.profile)
     return render(request, 'accounts/edit.html', {'user_form': user_form,'profile_form': profile_form})
    
+# @login_required
+# def order_detail(request):
+#     orders = Order.objects.filter(customer=request.user)
+#     return render(request,"orders/order/history.html", {'orders':orders})
+
+
