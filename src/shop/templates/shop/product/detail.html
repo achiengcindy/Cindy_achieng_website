@@ -1,26 +1,60 @@
+
 {% extends "shop/base.html" %}
+{% load shop_filters %}
+{% load shop_tags %}
 {% load staticfiles %}
 {% block title %} {{ product.name }} {% endblock %}
 
 {% block content %}
-<section class="products">
-        <div class="product_image">
-                <img src="{% if product.image %}{{ product.image.url }}{% else %}
-                {% static "img/no_image.png" %}{% endif %}">
+<div class="container">
+        <div class="row topspace">
+                <aside class="product_image">
+                        {% include 'tags/product_thumbnail_detail.html' %}
+                </aside>
+                <div class="product_detail">
+                        <h2>{{ product.name }}</h2>
+                      
+                        {% if product.sale_price %}
+                        <del class="previous-price"> <span>Was:</span>{{ product.old_price|currency }}</del>
+                        <p class="price"><span>Now:</span>{{ product.price|currency }}</p>
+                        {% else %}
+                        <p class="price">{{ product.price|currency }}</p>
+                        {% endif %}
+                        <p class="Brand"><span>Brand</span>:{{ product.brand }}</p>
+                        <p class="stock in-stock"><span>Stock</span>
+                                {% if product.quantity < 0 %} :Out of stock{% else %}: {{ product.quantity}} available {% endif %}</p>
+                        <span class="description">{{ product.description|linebreaks }}</span>
+                        
+                
+                        <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                        {{ cart_product_form.as_p }}
+                                        {% csrf_token %}
+                                        <button class="cart">Add to cart</button>
+                        </form>
+                        <div class="product_meta">
+                                        <span class="posted_in">
+                                                In categor{{ categories.count|pluralize:"y,ies" }}:
+                                                {% for c in categories %}
+                                                <a href="{{ c.get_absolute_url }}" rel="tag">{{c.name }}</a>
+                                                {% if not forloop.last %}, {% endif %}{% endfor %}
+                                        </span>
+                                        <span class="tagged_as">Tags: 
+                                                <a href="http://www.forherluxuryhair.com/product-tag/bundles/" rel="tag">Bundles</a>, 
+                                                <a href="http://www.forherluxuryhair.com/product-tag/caramel/" rel="tag">Caramel</a>, 
+                                                <a href="http://www.forherluxuryhair.com/product-tag/caramel-blonde/" rel="tag">Caramel Blonde</a>, 
+                                                <a href="http://www.forherluxuryhair.com/product-tag/classic/" rel="tag">classic</a>
+                                        </span>
+                                </div>
+
+                </div>
         </div>
-        <div class="product_detail">
-                <h3>{{ product.name }}</h3>
-                <div class="item">
-                <h4><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h4>
-                <p class="price">ksh{{ product.price }}</p>
-                <form action="{% url "cart:cart_add" product.id %}" method="post">
-                        {{ cart_product_form }}
-                        {% csrf_token %}
-                        <button class="cart">Add to cart</button>
-                </form>
-                {{ product.description|linebreaks }}
-        </div>
-</div>  
-</section>
+</div>
 {% endblock %}
+
+
+
+
+
+
+
 

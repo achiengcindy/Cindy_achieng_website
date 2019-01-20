@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load blog_tags %}
+{% load shop_filters %}
+{% load shop_tags %}
+
+{% block title %}home{% endblock %}
+
+
+{% block banner %}
+<section class="hero" role = "banner">
+  
+    <h1 class="text-center"> Hello, I'm Cindy.</h1>
+    <h2 class="desc text-center ">I talk about <span id="typed" style="color: #DA4453;"></span></h2>
+</section>
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="cindyquotes">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+       
+            <h1 class="lead text-center text-muted">Creativity is just connecting things. When you ask creative people how they did something, they feel a little guilty because they didn't really do it, they just saw something. It seemed obvious to them after a while.
+      
+                - Steve Job’s</h1>
+        </div>
+     </div>
+  </section>
+
+
+
+
+<section class="services">
+  <div class="container">
+    <h2 class="section-title">I am at your service</h2>
+    <div class="row">
+        <div class="column ambassador">
+            <i class="far fa-lightbulb fa-3x" aria-hidden="true"></i>
+          <h3>Mentorship</h3>
+          <p>I am a Tech ambassador for children, women and the underprivileged.I believe it's time for the gender gap in tech to be filled and so I encourage more Women to code. I talk in programming events, organize and host tech events and also offer mentorship. </p>
+          <a href="">info@achiengcindy.com</a>
+        </div>
+
+        <div class="column hosting">
+            <i class="fas fa-globe fa-3x"></i>
+             <h3>Web Hosting</h3>
+            <p>Your online presence matter.For small to medium sites get Django hosting with me.Uptime is guaranteed 100% at affordable price.Your mind will be blown away</p>
+           <a href="">info@achiengcindy.com</a>
+        </div>
+
+        <div class="column learn">
+            <i class="fas fa-book-reader fa-3x"></i>
+          <h3>Learn Programming</h3>
+          <p>The whole idea is to empower you to dive into coding.You have what it takes and the time to start is now.Learn Django,javascript and many  other technologies absolutely free</p>
+          <a href="{% url 'blog:post_list' %}">Go To Class</a>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+
+<section class="recent_blogs">
+    <div class="container">
+      <h2 class="section-title">Latest from My blog</h2>
+      <ul class="row">
+          {% show_recent_posts %}
+      </ul>
+      <footer class="more__posts">
+          <button><a href="{% url 'blog:post_list' %}">More Posts</a></button> 
+        </footer>
+       
+       </div>
+  </section>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<section class="featured products">
+    <div class="container">
+      <h2 class="section-title">featured products</h2>
+        <ul class="row padding">
+          <li class="column featured">
+              {% include 'tags/product_thumbnail.html' %}
+              {% product_list featured 'Featured Products' %}
+               
+          </li>
+        </ul>
+
+  
+        </div>
+  </section>
+
+
+
+
+<section class="partners">
+  <div class="container">
+    <h2 class="section-title">Partners</h2>
+      <ul class="row partners-section">
+        <li class="box">
+          <a href="https://v2.curriculum.co.ke/" target="_blank">
+            <figure>
+              <img src="{% static 'images/graduation-cap_1_160x72.png' %}">
+              <figcaption> curriculum</figcaption>
+            </figure>
+          </a>
+          </li>
+          <li class="box">
+              <a href="http://www.mochahost.com/6882.html" target="_blank">
+                <figure>
+                  <img src="{% static 'images/mochahost_160x72.png' %}">
+                  <figcaption> Mochahost</figcaption>
+                </figure>
+              </a>
+            </li>
+            <li class="box">
+                <a href="https://www.mailjet.com/?tap_a=25852-4bddf6&tap_s=243499-30c71b&aff=243499-30c71b" target="_blank">
+                <figure>
+                  <img src="{% static 'images/mailjetad.jpg' %}">
+                  <figcaption> Mailjet</figcaption>
+                </figure>
+              </a>
+              
+            </li>
+          </ul>
+
+      </div>
+    </section>
+    {% endblock %}

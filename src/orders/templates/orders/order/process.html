@@ -1,0 +1,41 @@
+{% extends "shop/base.html" %}
+{% load shop_filters %}
+{% load shop_tags %}
+{% block title %}Checkout{% endblock %}
+
+
+
+{% block content %}
+<h2>Checkout</h2>
+<div class="container">     
+    <div class="row topspace">
+            {% if user.is_authenticated %}
+            <h4><legend>Existing User</legend></h4>
+            Asante {{ request.user|capfirst }}!
+            <table>
+                    <tr>
+                    <th>Customer</th>
+                    <td>{{ order.customer.first_name }} {{ order.customer.last_name }}</td>
+                    </tr>
+                    <tr>
+                    <th>E-mail</th>
+                    <td><a href="mailto:{{ order.email }}">{{ order.customer.email }}</a></td>
+                    </tr>
+                    <tr>
+                    <th>Address</th>
+                    <td>{{ order.address }}, {{ order.customer.postal_code }} {{ order.customer.city }}</td>
+                    </tr>ustomer
+
+                    <tr>
+                    <th>Status</th>
+                    <td>{% if order.paid %}Paid{% else %}Pending payment{% endif %}</td>
+                    </tr>
+                    </table>
+            <a href="{% url 'accounts_edit' %}?next={{ request.path }}">Edited</a>
+            {% else %}
+            >
+            {% endif %}    
+            
+    </div>
+</div>
+{% endblock %}

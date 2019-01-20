@@ -24,6 +24,11 @@ class Cart(object):
 
 
 
+
+
+
+
+
     def __iter__(self):
         """
         Iterate over the items in the cart and get the products 

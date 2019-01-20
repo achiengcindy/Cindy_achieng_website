@@ -11,7 +11,7 @@
                                     {% url 'post_list' as Blog %}
                                     {% url 'contact' as Contacts %}
                                     {% url 'product_list' as Shop %}
-                                    
+                                   
                                     <li class="nav__item">
                                         <a {% if request.path == 'home' %} class="active" {% endif %} href="{% url 'home' %}">Home</a>
                                         </li>
@@ -22,32 +22,21 @@
                                     <li class="nav__item">
                                         <a {% if request.path == 'shop' %} class="active" {% endif %} href="{% url 'shop:product_list' %}">Shop</a>
                                     </li>
+                                   
                                     
                                 </ul>
                             </nav>
                 </div>
                 <div class="header-icons">
-                            <ul>
-                                <li>
-                                 <img src="{% static 'images/accounts_icon.png' %}">
-                                 <ul class="dropdown">
-                                     {% if user.is_authenticated %}
-                                     <li><a href="{% url 'logout' %}">logout</a></li>
-                                     {% else %}
-                                     <li><a href="{% url 'login' %}">login</a></li>
-                                     <li><a href="{% url 'register' %}">signup</a></li>
-                                     {% endif %}
-                                 </ul>
-                                </li>
-                                <li>
-                                <form class="search_form" action="{% url "blog:post_search" %}"  method="get">
-                                            <input type="search" name="query" aria-label="Search">
-                                            <span class="search-icon"><i class="fa fa-search"></i></span>
-                                </form>
-                            </li>
-                            </ul>
-                         </div>
-                            
+                    <ul>
+                        <li> 
+                            <form class="search_form" action="{% url "blog:post_search" %}"  method="get">
+                                <input type="search" name="query" aria-label="Search">
+                                <span class="search-icon"><i class="fa fa-search"></i></span>
+                            </form>
+                        </li>
+                    </ul>
+                </div>                
     </header>
 
 

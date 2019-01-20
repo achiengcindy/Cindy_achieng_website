@@ -11,8 +11,24 @@ from django.urls import reverse
 
 User = get_user_model()
 
+class OrderDetails(models.Model):
+	""" stores customer order information used with the last order placed; can be attached to the checkout order form
+    as a convenience to registered customers who have placed an order in the past.
+    """
+	class Meta:
+		abstract = True
 
-class Order(models.Model):
+	# contact info
+	phone = models.CharField(max_length=20)
+	#shipping information
+	physical_address =  models.CharField(max_length=250)
+	postal_code = models.CharField(max_length=20)
+	city = models.CharField(max_length=100)
+	Estate = models.CharField(max_length=100)
+
+
+
+class Order(OrderDetails):
     # each individual status
     SUBMITTED = 1
     PROCESSED = 2
@@ -26,7 +42,7 @@ class Order(models.Model):
         (CANCELLED,'Cancelled'),
         )
     # order info
-    customer = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
+    owner = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True, related_name='orders')
     status = models.IntegerField(choices=ORDER_STATUS, default=SUBMITTED)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -34,6 +50,7 @@ class Order(models.Model):
     Mpesa_transid = models.CharField(max_length = 150, blank= True)
     coupon = models.ForeignKey(Coupon,related_name='orders',null=True,blank=True,on_delete=models.SET_NULL)
     discount = models.IntegerField(default=0,validators=[MinValueValidator(0),MaxValueValidator(100)])
+
 
     class Meta:
         ordering = ('-created',)
@@ -53,9 +70,7 @@ class Order(models.Model):
     def get_absolute_url(self):
         return reverse('orders:order_create',args=[self.id, self.slug])
 
-
-        
-  
+ 
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,related_name='items',on_delete=models.CASCADE)

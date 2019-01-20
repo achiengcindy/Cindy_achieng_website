@@ -14,6 +14,35 @@
     });
 
 
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js', {
+              scope: '/'
+          })
+          .then(function(reg) {
+              if (!navigator.serviceWorker.controller) {
+                  return;
+              }
+              // there is updated service worker ready and waiting to to take over
+              if (reg.waiting) {
+                  updateReady(reg.waiting)
+                  return;
+              }
+              // there is update on the way. Although may be  be thrown away if installation fails we will listen to the stat
+  
+              if (reg.installing) {
+                  trackInstalling(reg.installing)
+                  return;
+              }
+  
+              reg.addEventListener('updatefound', function() {
+                  trackInstalling(reg.installing)
+              });
+          });
+  }
+
+ 
+
+
 
 // if ('serviceWorker' in navigator) {
 //   navigator.serviceWorker.register('/sw.js' , {scope: '/'})

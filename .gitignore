@@ -33,3 +33,11 @@ src/payment/mpesa\.py
 src/payment/token\.py
 
 src/orders/migrations/
+
+*.sql
+
+src/blog/templates/blog/post/detail1\.html
+
+src/accounts/migrations/
+
+src/blog/migrations/

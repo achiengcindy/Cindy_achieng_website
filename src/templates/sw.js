@@ -5,7 +5,7 @@ self.addEventListener('install', function(event) {
         caches.open(staticCacheName).then(function(cache) {
             return cache.addAll([
                 '/',
-                '/static/css/styles.css',
+                '/static/css/style.css',
                 '/static/images/favicon.ico',
                 '/static/js/main.js',
                 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',

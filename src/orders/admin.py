@@ -8,11 +8,11 @@ class OrderItemInline(admin.TabularInline):
     raw_id_fields = ['product']
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'customer' , 'paid','created', 'updated']
+    list_display = ['id', 'owner' , 'paid','created', 'updated']
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
 
-import csv
+""" import csv
 import datetime
 from django.http import HttpResponse
 
@@ -34,7 +34,7 @@ def export_to_csv(modeladmin, request, queryset):
             data_row.append(value)
         writer.writerow(data_row)
     return response
-export_to_csv.short_description = 'Export to CSV'
+export_to_csv.short_description = 'Export to CSV' """
 
 
 

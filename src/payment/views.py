@@ -64,7 +64,8 @@ def saf_registration(request):
 def payment_validation(request): 
     #posting body of raw JSON request
     #request.body ia a  byte string,decode before passing it to load
-    body = request.body.decode('utf-8')
+    # body = request.body.decode('utf-8')
+    body = request.body
     #read
     data = json.loads(body)
     print(data)
@@ -98,9 +99,9 @@ def payment_validation(request):
 @csrf_exempt
 def payment_confirmed(request):
     #decode 
-    body = request.body.decode('utf-8')
+    #body = request.body.decode('utf-8')
     #read
-    data = json.loads(body)
+    data = json.loads(request.body)
     order_id = data["BillRefNumber"]
     amount = float(data["TransAmount"])
     mpesaid = data["TransID"]

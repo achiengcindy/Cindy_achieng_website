@@ -18,11 +18,14 @@ import os
 
 BASE_DIR  =  os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__,  os.pardir))))
 
+EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND= config('EMAIL_BACKEND')
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -30,10 +33,6 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = False
-
-# payment must be a secret!
-consumer_key = config('consumer_key')
-consumer_secret = config('consumer_secret')
 
 # Application definition
 INSTALLED_APPS = [
@@ -57,7 +56,12 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'payment',
     'coupons',
+    'rest_framework',
+    'utils',
+    #search prducts
+    'search',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -141,10 +145,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 STATICFILES_STORAGE = config('STATICFILES_STORAGE')
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+#AUTH_USER_MODEL = 'accounts.Profile'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'login'
 LOGOUT_URL = '/'
+
 
 AUTHENTICATION_BACKENDS = (
 'django.contrib.auth.backends.ModelBackend',
@@ -155,5 +160,17 @@ CART_SESSION_ID = 'cart'
 
 # RuntimeError: You called this URL via POST, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining POST data. Change your form to point to 6ec449ce.ngrok.io/payment/validation/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
 # APPEND_SLASH = False 
+
+#meta tags
+
+SITE_NAME = 'Cindy Achieng'
+META_KEYWORDS = 'Django, Python, Programming, mentor'
+META_DESsCRIPTION = 'Free django materials, programming insights, shop'
+
+# payment must be a secret!
+SAFARICOM_API_CONSUMER_KEY = config('SAFARICOM_API_CONSUMER_KEY')
+SAFARICOM_API_CONSUMER_SECRET = config('SAFARICOM_API_CONSUMER_SECRET')
+
+
 
 

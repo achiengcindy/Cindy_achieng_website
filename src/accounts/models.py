@@ -10,6 +10,13 @@ class Profile(OrderDetails):
 	user = models.OneToOneField(User, on_delete=models.CASCADE,)
 	birth_date = models.DateField(blank=True, null=True, help_text='Please use the following format: YYYY-MM-DD.',)
 	photo = models.ImageField(upload_to='users/%Y/%m/%d',blank=True)
+	# contact info
+	phone = models.CharField(max_length=20)
+	#shipping information
+	physical_address =  models.CharField(max_length=250)
+	postal_code = models.CharField(max_length=20)
+	city = models.CharField(max_length=100)
+	Estate = models.CharField(max_length=100)
 
 
 	def __str__(self):

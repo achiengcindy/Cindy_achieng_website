@@ -1,43 +1,49 @@
 {% extends "shop/base.html" %}
+{% load shop_filters %}
+{% load shop_tags %}
 {% load staticfiles %}
-{% block title %}{% if category %}{{ category.name }}{% else %}Products{% endif %}{% endblock %}
-
-
+{% block title %} welcome to achieng shop{% endblock %}
 
 {% block content %}
-    <section class="products">
-        <div class="products-new">
-                <h3>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h3>
-                {% for product in products %}
-                <div class="products_list">
-                    <a href="{{ product.get_absolute_url }}">
-                        <img src="{% if product.image %}{{ product.image.url }}{% else %}
-                        {% static "images/no_image.png" %}{% endif %}">
-                    </a>
-                    <div class="item">
-                        <h4><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
-                        <small class="previous-price"></small>
-                        <p class="price">ksh{{ product.price }}</p>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="aside">
-                    <h3>Categories</h3>
-                    <ul>
-                        <li {% if not category %}class="selected"{% endif %}>
-                            <a href="{% url "shop:product_list" %}">All</a>
-                        </li>
-                {% for c in categories %}
-                        <li {% if category.slug == c.slug %}class="selected"{% endif %}>
-                            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-                        </li>
-                {% endfor %}
-                    </ul>
-            </div>
+<div class="topspace container products">
+            <aside class="aside">
+                    {% category_list request.path %}
+            </aside>
+                    <div class="row products-new">
+                            {% product_list featured 'Featured Products' %}
+                            {% product_list bestseller 'bestseller' %}
+                        </div>
+                
+          
 
-    </section>
-{% endblock %}
+    </div>
+       
+
+   
+{% endblock %} 
+            
+        
+        
+        
+        
+        
+        
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

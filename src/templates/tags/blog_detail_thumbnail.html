@@ -1,0 +1,7 @@
+
+{% load thumbnail %}
+{% thumbnail post.image "850x750" as im %}
+<a href="{{ post.image.url }}">
+    <img src="{{ im.url }}"  width="{{ im.width }}" height="{{ im.height }}" class="card-image" alt="{{ post.caption }}">
+</a>
+{% endthumbnail %}

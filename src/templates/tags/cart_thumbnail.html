@@ -1,0 +1,7 @@
+{% load thumbnail %}
+{% thumbnail product.image "75x75" as im %}
+<a href="{{ product.image.url }}">
+    <img src="{{ im.url }}"  width="{{ im.width }}" height="{{ im.height }}" class="card-image" alt="{{ product.name }}">
+</a>
+{% endthumbnail %}
+

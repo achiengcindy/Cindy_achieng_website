@@ -1,0 +1,29 @@
+{% load shop_filters %}
+
+
+{% for product in products %}
+	{% if forloop.first %}
+        <h2 class='product_list'>{{ header_text }}</h2>
+    {% endif %}
+        <li class="box product_items">
+            {% include 'tags/product_thumbnail.html' %}
+            {% if forloop.last %}	
+            {% endif %}
+            <h3><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+            <del class="previous-price"></del>
+            <p class="price">{{ product.price|currency }}</p>
+        </li>
+
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+

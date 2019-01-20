@@ -5,7 +5,7 @@ DEBUG = True
 MEDIA_URL = '/media/'
 
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','4f42d726.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1', '56043181.ngrok.io']
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases

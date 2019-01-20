@@ -1,0 +1,29 @@
+{% load blog_tags %}
+
+        {% for post in latest_posts %}
+
+            <li class="column">
+                    <article class="content-item">
+                            <header>
+                               <figure>
+                                {% include 'tags/blog_thumbnail.html' %}
+                               </figure>
+                                <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a><h3>
+                            </header>
+                            <section>
+                               <p>{{ post.body|markdown|truncatewords_html:25 }}</p>
+                               <span class="read-more">
+                               <a class="blue-link" href="{{post.get_absolute_url}}">Read more</a>
+                               </span>
+                            </section>
+                         </article>
+            </li>
+       
+  
+    {% endfor %}
+
+
+  
+
+
+

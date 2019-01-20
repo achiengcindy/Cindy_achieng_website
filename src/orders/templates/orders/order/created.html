@@ -10,23 +10,23 @@
                 <div class="receipt cart-collaterals">
                                 {% if user.is_authenticated %}
                         <h4><legend> Details for Order {{ order.id }}</legend></h4>
-                        Asante {{ order.customer.username|capfirst }}!
-                        {{ customer.order_set.all }}
+                        Asante {{ order.owner.username|capfirst }}!
+                        {{ owner.order_set.all }}
                         <table><tr>
                                         <th>Created</th>
                                         <td>{{ order.created }}</td>
                                         </tr>
                                         <tr>
                                         <th>Customer</th>
-                                        <td>{{ order.customer.first_name }} {{ order.customer.last_name }}</td>
+                                        <td>{{ order.owner.first_name }} {{order.owner.last_name }}</td>
                                         </tr>
                                         <tr>
                                         <th>E-mail</th>
-                                        <td><a href="mailto:{{ order.email }}">{{ order.customer.email }}</a></td>
+                                        <td><a href="mailto:{{ order.email }}">{{ order.owner.email }}</a></td>
                                         </tr>
                                         <tr>
                                         <th>Address</th>
-                                        <td>{{ order.customer.address }}, {{ order.customer.postal_code }} {{ order.customer.city }}</td>
+                                        <td>{{ order.owner.profile.physical_address }}, {{ order.owner.profile.postal_code }}, {{ order.owner.profile.city }}, {{ order.owner.profile.Estate }}</td>
                                         </tr>
                 
                                         <tr>
@@ -95,12 +95,15 @@
                                 <button class="button"><a href="{% url 'payment:lipa' order.pk %}">Pay Now</a></button>
                         </div>
 
+          
+
         </div>
 </div>
 
 
         {% endblock %}
 
+       
 
 
 

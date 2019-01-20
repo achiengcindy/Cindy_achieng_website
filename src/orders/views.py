@@ -45,17 +45,12 @@ def order_create(request):
             # set the order in the session
             # request.session['order_id'] = order.id
             # redirect to the payment
-            # save profile info for future orders
-            # if request.user.is_authenticated:
-            #     profile.set(request)
-            # return order
-            # print(order)
-            #return redirect(reverse('orders:order_created',kwargs={"order_id": order.id}))
+            return render(request, 'orders/order/created.html',{"order": order, 'cart': cart,})
+            #return redirect(reverse('orders:order_created',kwargs={"order_id": order.id, 'cart': cart,}))
     else:
         if request.user.is_authenticated:
             profile = request.user.profile
             form = checkoutForm(instance=profile)
-
         else:
             form = checkoutForm()
     return render(request, 'orders/order/create.html', {'cart': cart,'form':form})
@@ -73,11 +68,12 @@ def order_create(request):
 
 @login_required
 def order_created(request,order_id):
-    order = get_object_or_404(Order, id=order_id, owner=request.user)
+    order = get_object_or_404(Order, id=order_id)
     # set the order in the session
     request.session['order_id'] = order.id
+    return render(request,'orders/order/created.html',{'order': order})
     # redirect to the payment
-    return redirect(reverse('payment:payment_lipa'))
+    #return redirect(reverse('payment:payment_lipa', kwargs={"order_id": order.pk}))
 
 
 

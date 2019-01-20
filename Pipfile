@@ -14,6 +14,9 @@ markdown = "*"
 celery = "*"
 redis = "*"
 requests = "*"
+weasyprint = "*"
+djangorestframework = "*"
+sorl-thumbnail = "*"
 
 [dev-packages]
 pylint = "*"
