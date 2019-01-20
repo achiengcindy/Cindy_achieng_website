@@ -1,12 +1,13 @@
 {% extends "shop/base.html" %}
 {% block title %}Pay using mpesa{% endblock %}
 {% block content %}
-<h3>Pay using Mpesa</h3>
-<p>Asante {{ request.user }},Your invoice <strong>{{ order.id }}</strong> has been paid.
-
-
-<button><a href="{% url "shop:product_list" %}" class="button light">Shop again</a></button>
-
+<div class="container">
+    <div class="row topspace">
+        <h3>Pay using Mpesa</h3>
+            <p>Asante {{ request.user }},Your invoice <strong>{{ order.id }}</strong> has been paid.
+            <button><a href="{% url "shop:product_list" %}" class="button light">Shop again</a></button>
+    </div>
+</div>
 {% endblock %}
 
 
