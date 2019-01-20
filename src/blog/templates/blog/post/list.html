@@ -12,6 +12,7 @@
 					{% include 'tags/blog_thumbnail.html' %}
 					<a href="{{post.category.get_absolute_url}}" class="category" rel="category tag">{{post.category.title}}</a>
 					<h2><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
+					<p>{{ post.body|markdown|truncatewords_html:25 }}</p>
 					</header>
 					<a href="{{post.get_permalink_url}}" class="card-footer">read more</a>
 				</article>

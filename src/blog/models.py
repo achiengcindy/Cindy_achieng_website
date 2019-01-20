@@ -34,6 +34,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='blog_posts',on_delete=models.CASCADE)
     image = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
+    alt= models.CharField(default='', max_length=250),
     caption = models.URLField(max_length=250,null=True, blank=True)
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
@@ -59,27 +60,6 @@ class Post(models.Model):
 
     def get_permalink_url(self):
         return reverse('permalink', args=[self.id])    
-
-class Comment(models.Model):
-
-    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
-    commenter = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='user_comments',on_delete=models.CASCADE, default='')
-    website = models.URLField(null=True, blank=True)
-    body = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    active = models.BooleanField(default=True)
-    parent = models.ForeignKey('self',on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
-
-    class Meta:
-        ordering = ('-created',)
-
-    def __str__(self):
-        return 'Comment by {}'.format(self.commenter)
-  
-
-
-
 
 
 

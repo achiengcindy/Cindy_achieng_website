@@ -13,12 +13,10 @@
                     <header class="entry-header">
                         <figure class="detail">
                             {% include 'tags/blog_detail_thumbnail.html' %}
-                            <figcaption class="single-caption"> {% if post.caption %}
-                                <a href="https://achiengcindy.com">{{ post.caption }} {% else
-                                    %}https://achiengcindy.com{% endif %}</a>
+                            <figcaption class="single-caption"> {% if post.caption %}{{ post.caption }} {% else%} <a href="https://achiengcindy.com"></a>{% endif %}
                             </figcaption>
                         </figure>
-                        <h2 class=""><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
+                        <h2 style="text-transform: capitalize;">{{post.title}}</h2>
 
                         <span class="posted-on"><time class="time"> Posted on {{ post.publish }} &nbsp;|&nbsp; updated
                                 {{ post.updated }}</time></span>
@@ -60,11 +58,11 @@
                 <!-- Author bio -->
                 <div class="author-bio">
                     <img src="{% static 'images/headshot.jpg' %}" alt="cindy picture" height="72" width="72" class="author-avatar avatar">
-                    <h3 class="author-name"><a href="https://achiengcindy.com">Cindy Achieng</a></h3>
+                    <h3 class="author-name"><a href="https://achiengcindy.com" alt="cindy headshot">Cindy Achieng</a></h3>
                     <p class="author-description">
                         I am a Django developer and Co-founder of Oark Limited based in Nairobi Kenya.I love to share
                         my coding journey with the world with the aim to teach ,learn and inspire.I speak and host tech
-                        events.Away from programming, i like to spend time with my dog Tess.
+                        events.Away from programming, i like to spend time with my dog Tess.</p>
                 </div>
                 <!--.author-bio-->
                 <div class="related_posts">
@@ -112,6 +110,16 @@
 
                 </div>
         </div>
+
+        <div class="sidebar">
+            <!-- post written -->
+            <h2 class="aside-title">Latest Posts from my Blog</h2>
+                    
+            {% show_latest_posts 3 %}
+               <a href="https://www.mochahost.com/6882-47-1-246.html" target="_blank"><img border="0" src="https://www.mochasupport.com/aff/banners/120x600_mgreen.gif" width="120" height="600"></a>
+              
+                        
+    </div>
     </div>
 </section>
 {% endblock %}
